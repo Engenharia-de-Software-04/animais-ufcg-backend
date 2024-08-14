@@ -25,7 +25,37 @@ Nomes de branches são compostos de duas partes:
 
    Exemplos:
 
-   ```plaintext
-   feat/USXX-adding-animal
-   fix/USXX-listing-animals
-   style/USXX-fixing-indentation
+```plaintext
+feat/USXX-adding-animal
+fix/USXX-listing-animals
+style/USXX-fixing-indentation
+```
+
+   ## Commits
+
+São compostos de 
+
+1) Categorias (mesmas das branches)
+
+- **docs**: Mudanças na documentação
+- **feat**: Nova funcionalidade;
+- **fix**: Correção de um bug;
+- **refactor**: Mudança de código que não adiciona uma funcionalidade e também não corrigi um bug, apenas refatorar.
+- **test**: Adicionar ou corrigir testes.
+- **style:** mudanças no código que não afetam seu significado (espaço em branco, formatação, ponto e vírgula, etc);
+
+2) Verbos no gerúndio (adding, fixing, listing). 
+
+Exemplos:
+
+`feat: Adding a method to list animals`  
+
+`fix: fixing route of the method get animal` 
+
+## Nomeação
+
+Nomeação de variáveis em camelCase
+
+Variável em inglês
+
+Código em inglês
