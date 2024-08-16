@@ -39,6 +39,10 @@ public class Animal {
     @Column(nullable = false)
     private String animalSpecie;
 
+    @JsonProperty("photoURL")
+    @Column(nullable = true)
+    private String photoURL;
+
     @PrePersist
     private void setStatus() {
         setStatus(AnimalStatus.AVALIABLE);
