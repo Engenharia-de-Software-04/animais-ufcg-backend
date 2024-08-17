@@ -1,6 +1,5 @@
 package br.ufcg.animais.animais_ufcg.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import br.ufcg.animais.animais_ufcg.models.*;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

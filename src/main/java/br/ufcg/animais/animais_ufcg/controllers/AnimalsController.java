@@ -8,8 +8,8 @@ public class AnimalsController {
     
     @PostMapping()
     public ResponseEntity<?> creatingAnimal(@RequestBody @Valid AnimalPostPutRequestDTO animalPostPutRequestDto) {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(AnimalService.creatingAnimal(animalPostPutRequestDto));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(AnimalService.creatingAnimal(animalPostPutRequestDto));
     }    
 }
