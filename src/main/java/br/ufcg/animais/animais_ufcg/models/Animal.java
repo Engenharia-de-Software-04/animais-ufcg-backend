@@ -1,6 +1,7 @@
 package br.ufcg.animais.animais_ufcg.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
+
+import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -19,9 +20,13 @@ public class Animal {
     @GeneratedValue
     private UUID id;
 
-    @JsonProperty("status")
+    @JsonProperty("statusAnimal")
     @Column(nullable = true)
-    private AnimalStatus status;
+    private AnimalStatus statusAnimal;
+
+    @JsonProperty("animalSex")
+    @Column(nullable = false)
+    private AnimalSex animalSex;
 
     @JsonProperty("animalName")
     @Column(nullable = false)
