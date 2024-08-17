@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.models;
+package br.ufcg.animais.animais_ufcg.models.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;

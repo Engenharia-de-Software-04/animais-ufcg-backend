@@ -1,5 +1,7 @@
-package br.ufcg.animais.animais_ufcg.models;
+package br.ufcg.animais.animais_ufcg.models.adoption_reports;
 import br.ufcg.animais.animais_ufcg.models.*;
+import br.ufcg.animais.animais_ufcg.models.animals.Animal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.*;
 import org.springframework.data.annotation.Id;
@@ -24,13 +26,13 @@ public class AdoptionReport {
     @Field("animal")
     private Animal animal;
 
-    @JsonProperty("animalOwerName")
-    @Field("animalOwerName")
-    private String animalOwerName;
+    @JsonProperty("animalOwnerName")
+    @Field("animalOwnerName")
+    private String animalOwnerName;
 
-    @JsonProperty("report")
-    @Field("report")
-    private String report;
+    @JsonProperty("adoptionReport")
+    @Field("adoptionReport")
+    private String adoptionReport;
 
     @JsonProperty("photoURL")
     @Field("photoURL")
