@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.dtos;
+package br.ufcg.animais.animais_ufcg.dtos.animals;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.persistence.*;
@@ -6,7 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.util.*;
 
-public class AnimalsPostPutRequestDTO {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AnimalsResponseDTO {
 
     @JsonProperty("id")
     @Id
@@ -38,4 +42,15 @@ public class AnimalsPostPutRequestDTO {
 
     @JsonProperty("photoURL")
     private String photoURL;
+
+    public AnimalResponseDTO(Animal animal) {
+        this.id = animal.getId();
+        this.statusAnimal = animal.getStatusAnimal();
+        this.animalSex = animal.getAnimalSex();
+        this.animalName = animal.getAnimalName();
+        this.animalAge = animal.getAnimalAge();
+        this.animalBreed = animal.getAnimalBreed();
+        this.animalSpecie = animal.getAnimalSpecie();
+        this.photoURL = animal.getPhotoURL();
+    }
 }
