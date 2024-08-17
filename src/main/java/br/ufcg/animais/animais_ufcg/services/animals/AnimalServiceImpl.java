@@ -1,10 +1,10 @@
-package br.ufcg.animais.animais_ufcg.services;
+package br.ufcg.animais.animais_ufcg.services.animals;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.ufcg.animais.animais_ufcg.dtos.*;
-import br.ufcg.animais.animais_ufcg.models.*;
-import br.ufcg.animais.animais_ufcg.repositories.*;
+import br.ufcg.animais.animais_ufcg.dtos.animals.*;
+import br.ufcg.animais.animais_ufcg.models.animals.*;
+import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 
 public class AnimalServiceImpl {
 
