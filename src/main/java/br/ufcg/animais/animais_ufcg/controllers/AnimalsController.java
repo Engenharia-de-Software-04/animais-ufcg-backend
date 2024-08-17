@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class AnimalsController {
     
     @PostMapping()
-    public ResponseEntity<?> creatingAnimal(@RequestBody @Valid AnimalPostPutRequestDTO animalPostPutRequestDto) {
+    public ResponseEntity<?> creatingAnimal(@RequestBody @Valid AnimalsPostPutRequestDTO animalPostPutRequestDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(AnimalService.creatingAnimal(animalPostPutRequestDto));

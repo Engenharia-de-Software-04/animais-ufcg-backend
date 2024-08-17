@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.util.*;
 
-public class AnimalPostPutRequestDTO {
+public class AnimalsPostPutRequestDTO {
 
     @JsonProperty("id")
     @Id

@@ -1,36 +1,38 @@
 package br.ufcg.animais.animais_ufcg.models;
+import br.ufcg.animais.animais_ufcg.models.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.annotation.Id;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
 
-@Entity
 @Getter
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "adoptionReport")
+@Document(name = "adoptionReport")
 public class AdoptionReport {
 
     @JsonProperty("id")
     @Id
-    @GeneratedValue
+    @org.springframework.data.mongodb.core.mapping.Field("_id")
     private UUID id;
 
     @JsonProperty("animal")
-    @Column(nullable = false)
+    @Field("animal")
     private Animal animal;
 
     @JsonProperty("animalOwerName")
-    @Column(nullable = false)
+    @Field("animalOwerName")
     private String animalOwerName;
 
     @JsonProperty("report")
-    @Column(nullable = false)
+    @Field("report")
     private String report;
 
     @JsonProperty("photoURL")
-    @Column(nullable = true)
+    @Field("photoURL")
     private String photoURL;
 }
