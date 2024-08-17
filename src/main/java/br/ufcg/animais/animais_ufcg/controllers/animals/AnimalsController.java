@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.controllers;
+package br.ufcg.animais.animais_ufcg.controllers.animals;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
