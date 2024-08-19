@@ -11,7 +11,6 @@ import java.util.*;
 public class AdoptionReportsPostPutRequestDTO {
 
     @JsonProperty("id")
-    @Id
     private UUID id;
 
     @JsonProperty("animal")
