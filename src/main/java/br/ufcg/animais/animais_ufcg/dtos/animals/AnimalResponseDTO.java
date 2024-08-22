@@ -1,5 +1,8 @@
-package br.ufcg.animais.animais_ufcg.dtos;
+package br.ufcg.animais.animais_ufcg.dtos.animals;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,10 +13,9 @@ import java.util.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnimalPostPutRequestDTO {
+public class AnimalResponseDTO {
 
     @JsonProperty("id")
-    @Id
     private UUID id;
 
     @JsonProperty("statusAnimal")
@@ -31,19 +33,24 @@ public class AnimalPostPutRequestDTO {
     @JsonProperty("animalAge")
     @NotBlank(message = "Animal's age is required!")
     private String animalAge;
-
-    @JsonProperty("animalBreed")
-    @NotBlank(message = "Animal's breed is required!")
-    private String animalBreed;
-
+    
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
     private String animalSpecie;
+    
+    @JsonProperty("animalBreed")
+    private String animalBreed;
 
-    @JsonProperty("photoURL")
-    private String photoURL;
+    @JsonProperty("animalIsCastrated")
+    private Boolean animalIsCastrated;
 
-    public AnimalResponseDTO(Animal animal) {
+    @JsonProperty("animalIsVaccinated")
+    private Boolean animalIsVaccinated;
+
+    @JsonProperty("photo")
+    private byte[] photo;
+
+    public AnimalResponseDTO (Animal animal) {
         this.id = animal.getId();
         this.statusAnimal = animal.getStatusAnimal();
         this.animalSex = animal.getAnimalSex();
@@ -51,6 +58,8 @@ public class AnimalPostPutRequestDTO {
         this.animalAge = animal.getAnimalAge();
         this.animalBreed = animal.getAnimalBreed();
         this.animalSpecie = animal.getAnimalSpecie();
-        this.photoURL = animal.getPhotoURL();
+        this.animalIsCastrated = animal.getAnimalIsCastrated();
+        this.animalIsVaccinated = animal.getAnimalIsVaccinated();
+        this.photo = animal.getPhoto();
     }
 }
