@@ -24,6 +24,7 @@ public class Animal {
 
     @JsonProperty("statusAnimal")
     @Field("statusAnimal")
+    @Builder.Default
     private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
 
     @JsonProperty("animalSex")
@@ -44,6 +45,7 @@ public class Animal {
     
     @JsonProperty("animalBreed")
     @Field("animalBreed")
+    @Builder.Default
     private String animalBreed = "Unknown";
 
     @JsonProperty("animalIsCastrated")

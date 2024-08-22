@@ -1,12 +1,15 @@
-package br.ufcg.animais.animais_ufcg.services;
+package br.ufcg.animais.animais_ufcg.services.animals;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import br.ufcg.animais.animais_ufcg.dtos.*;
-import br.ufcg.animais.animais_ufcg.models.*;
-import br.ufcg.animais.animais_ufcg.repositories.*;
+import br.ufcg.animais.animais_ufcg.dtos.animals.*;
+import br.ufcg.animais.animais_ufcg.models.animals.*;
+import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 
-public class AnimalServiceImpl {
+@Service
+public class AnimalServiceImpl implements AnimalService {
 
     @Autowired
     AnimalsRepository animalsRepository;
