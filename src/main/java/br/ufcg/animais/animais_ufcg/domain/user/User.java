@@ -1,17 +1,15 @@
 package br.ufcg.animais.animais_ufcg.domain.user;
 
-import jakarta.persistence.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name="users")
+@Document(collection = "users")
 @Getter
 @Setter
 @AllArgsConstructor
