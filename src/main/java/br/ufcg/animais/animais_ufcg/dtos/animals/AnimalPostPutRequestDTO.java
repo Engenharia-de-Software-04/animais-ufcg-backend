@@ -2,8 +2,8 @@ package br.ufcg.animais.animais_ufcg.dtos.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.util.*;
 
@@ -21,7 +21,7 @@ public class AnimalPostPutRequestDTO {
     private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
 
     @JsonProperty("animalSex")
-    @NotBlank(message = "Animal's sex is required!")
+    @NotNull(message = "Animal's sex is required!")
     private AnimalSex animalSex;
 
     @JsonProperty("animalName")
