@@ -2,12 +2,8 @@ package br.ufcg.animais.animais_ufcg.models.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
-
-import org.hibernate.validator.constraints.UUID;
 import org.springframework.data.mongodb.core.mapping.*;
-import jakarta.persistence.*;
 import lombok.*;
-import java.util.*;
 
 @Getter
 @Setter
@@ -20,7 +16,7 @@ public class Animal {
 
     @JsonProperty("id")
     @org.springframework.data.mongodb.core.mapping.Field("_id")
-    private UUID id;
+    private Long id;
 
     @JsonProperty("statusAnimal")
     @Field("statusAnimal")

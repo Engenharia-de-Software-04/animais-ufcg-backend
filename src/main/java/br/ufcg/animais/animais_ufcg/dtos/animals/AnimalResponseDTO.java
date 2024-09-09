@@ -16,7 +16,7 @@ import lombok.*;
 public class AnimalResponseDTO {
 
     @JsonProperty("id")
-    private UUID id;
+    private Long id;
 
     @JsonProperty("statusAnimal")
     @Builder.Default
