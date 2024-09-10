@@ -14,7 +14,7 @@ import java.util.*;
 public class AnimalPostPutRequestDTO {
 
     @JsonProperty("id")
-    private UUID id;
+    private String id;
 
     @JsonProperty("statusAnimal")
     @Builder.Default

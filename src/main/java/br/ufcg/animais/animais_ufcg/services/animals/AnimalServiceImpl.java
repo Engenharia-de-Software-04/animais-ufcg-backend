@@ -24,4 +24,9 @@ public class AnimalServiceImpl implements AnimalService {
         animalsRepository.save(animal);
         return modelMapper.map(animal, AnimalResponseDTO.class);
     }
+
+    @Override
+    public Animal getAnimalById(String id) {
+        return animalsRepository.findById(id).orElse(null);
+    }
 }
