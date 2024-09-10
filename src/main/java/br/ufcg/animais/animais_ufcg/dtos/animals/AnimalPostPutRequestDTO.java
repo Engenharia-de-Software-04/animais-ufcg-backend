@@ -14,7 +14,7 @@ import java.util.*;
 public class AnimalPostPutRequestDTO {
 
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("statusAnimal")
     @Builder.Default
@@ -35,7 +35,7 @@ public class AnimalPostPutRequestDTO {
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
     private String animalSpecie;
-    
+
     @JsonProperty("animalBreed")
     private String animalBreed;
 

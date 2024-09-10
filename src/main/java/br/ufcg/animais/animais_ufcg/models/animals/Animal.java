@@ -2,6 +2,11 @@ package br.ufcg.animais.animais_ufcg.models.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.*;
 import lombok.*;
 
@@ -15,8 +20,9 @@ import lombok.*;
 public class Animal {
 
     @JsonProperty("id")
-    @org.springframework.data.mongodb.core.mapping.Field("_id")
-    private Long id;
+    @Id
+    @Indexed(unique = true)
+    private String id;
 
     @JsonProperty("statusAnimal")
     @Field("statusAnimal")
@@ -38,7 +44,7 @@ public class Animal {
     @JsonProperty("animalSpecie")
     @Field("animalSpecie")
     private String animalSpecie;
-    
+
     @JsonProperty("animalBreed")
     @Field("animalBreed")
     @Builder.Default

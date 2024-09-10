@@ -16,7 +16,7 @@ import lombok.*;
 public class AnimalResponseDTO {
 
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("statusAnimal")
     @Builder.Default
@@ -33,11 +33,11 @@ public class AnimalResponseDTO {
     @JsonProperty("animalAge")
     @NotBlank(message = "Animal's age is required!")
     private String animalAge;
-    
+
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
     private String animalSpecie;
-    
+
     @JsonProperty("animalBreed")
     private String animalBreed;
 
