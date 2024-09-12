@@ -4,5 +4,5 @@ import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.*;
 
 public interface AdoptionReportService {
     
-    AdoptionReportResponseDTO creatingAdoptionReport(AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO);
+    AdoptionReportsResponseDTO creatingAdoptionReport(AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO);
 }
