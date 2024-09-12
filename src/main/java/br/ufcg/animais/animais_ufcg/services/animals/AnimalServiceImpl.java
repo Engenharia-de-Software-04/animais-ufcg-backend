@@ -24,4 +24,9 @@ public class AnimalServiceImpl implements AnimalService {
         animalsRepository.save(animal);
         return modelMapper.map(animal, AnimalResponseDTO.class);
     }
+
+    public void deleteAnimal(String id){
+        Animal animal = animalsRepository.findById(id).orElseThrow(AnimalNotExist::new);
+        animalsRepository.delete(animal);
+    }
 }
