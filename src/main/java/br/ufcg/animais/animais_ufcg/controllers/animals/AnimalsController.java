@@ -25,7 +25,9 @@ public class AnimalsController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAnimal(@PathVariable String id){
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        animalService.deleteAnimal(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT).body("");
     }
 
     
