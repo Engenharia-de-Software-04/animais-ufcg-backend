@@ -22,5 +22,12 @@ public class AnimalsController {
                 .status(HttpStatus.CREATED)
                 .body(animalService.creatingAnimal(animalPostPutRequestDto));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAnimal(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    
 }
  
