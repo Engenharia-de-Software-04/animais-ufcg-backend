@@ -19,7 +19,6 @@ public class AnimalServiceImpl implements AnimalService {
     
     @Override
     public AnimalResponseDTO creatingAnimal(AnimalPostPutRequestDTO animalPostPutRequestDTO) {
-
         Animal animal = modelMapper.map(animalPostPutRequestDTO, Animal.class);
         animalsRepository.save(animal);
         return modelMapper.map(animal, AnimalResponseDTO.class);
