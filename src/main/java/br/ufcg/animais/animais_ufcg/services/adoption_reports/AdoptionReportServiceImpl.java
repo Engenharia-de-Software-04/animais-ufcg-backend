@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.models.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.repositories.adoption_reports.*;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AdoptionReportServiceImpl implements AdoptionReportService {
 
     @Autowired

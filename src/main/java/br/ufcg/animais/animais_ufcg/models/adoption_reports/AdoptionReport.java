@@ -17,7 +17,7 @@ public class AdoptionReport {
     @JsonProperty("id")
     @Id
     @org.springframework.data.mongodb.core.mapping.Field("_id")
-    private UUID id;
+    private String id;
 
     // @JsonProperty("animal")
     // @Field("animal")

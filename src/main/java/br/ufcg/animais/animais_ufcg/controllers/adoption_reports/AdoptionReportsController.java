@@ -9,9 +9,9 @@ import jakarta.validation.Valid;
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.services.adoption_reports.*;
 
+@RestController
 @RequestMapping("/adoption_reports")
 public class AdoptionReportsController {
-
     @Autowired
     AdoptionReportService adoptionReportService;
     

@@ -7,7 +7,7 @@ import java.util.*;
 public class AdoptionReportsPostPutRequestDTO {
 
     @JsonProperty("id")
-    private UUID id;
+    private String id;
 
     // @JsonProperty("animal")
     // @NotBlank(message = "An animal is required!")

@@ -14,7 +14,7 @@ import java.util.*;
 public class AdoptionReportsResponseDTO {
 
     @JsonProperty("id")
-    private UUID id;
+    private String id;
 
     // @JsonProperty("animal")
     // @NotBlank(message = "An animal is required!")
