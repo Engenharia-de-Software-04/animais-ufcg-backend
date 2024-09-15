@@ -1,10 +1,13 @@
 package br.ufcg.animais.animais_ufcg.models.adoption_reports;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import br.ufcg.animais.animais_ufcg.models.animals.Animal;
+
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.*;
 import org.springframework.data.annotation.Id;
 import lombok.*;
-import java.util.*;
 
 @Getter
 @Data
@@ -16,12 +19,12 @@ public class AdoptionReport {
 
     @JsonProperty("id")
     @Id
-    @org.springframework.data.mongodb.core.mapping.Field("_id")
+    @Indexed(unique = true)
     private String id;
 
-    // @JsonProperty("animal")
-    // @Field("animal")
-    // private Animal animal;
+    @JsonProperty("animal")
+    @Field("animal")
+    private Animal animal;
 
     @JsonProperty("animalOwnerName")
     @Field("animalOwnerName")

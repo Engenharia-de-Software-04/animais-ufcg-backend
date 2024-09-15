@@ -2,8 +2,12 @@ package br.ufcg.animais.animais_ufcg.dtos.adoption_reports;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
-import java.util.*;
+import lombok.*;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdoptionReportsPostPutRequestDTO {
 
     @JsonProperty("id")

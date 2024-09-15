@@ -1,9 +1,11 @@
 package br.ufcg.animais.animais_ufcg.repositories.adoption_reports;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import br.ufcg.animais.animais_ufcg.models.adoption_reports.AdoptionReport;
-import java.util.*;
+import org.springframework.stereotype.Repository;
 
-public interface AdoptionReportsRepository extends MongoRepository<AdoptionReport, UUID> {
+import br.ufcg.animais.animais_ufcg.models.adoption_reports.AdoptionReport;
+
+@Repository
+public interface AdoptionReportsRepository extends MongoRepository<AdoptionReport, String> {
     
 }

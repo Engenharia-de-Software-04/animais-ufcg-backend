@@ -3,7 +3,6 @@ package br.ufcg.animais.animais_ufcg.dtos.animals;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.ufcg.animais.animais_ufcg.models.animals.*;
-// import org.hibernate.validator.constraints.UUID;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

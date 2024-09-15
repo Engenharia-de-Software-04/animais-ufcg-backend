@@ -12,6 +12,7 @@ import br.ufcg.animais.animais_ufcg.services.adoption_reports.*;
 @RestController
 @RequestMapping("/adoption_reports")
 public class AdoptionReportsController {
+    
     @Autowired
     AdoptionReportService adoptionReportService;
     
