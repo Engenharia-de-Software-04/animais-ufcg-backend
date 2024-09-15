@@ -1,10 +1,8 @@
 package br.ufcg.animais.animais_ufcg.dtos.animals;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.ufcg.animais.animais_ufcg.models.animals.*;
-import org.hibernate.validator.constraints.UUID;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -32,14 +30,14 @@ public class AnimalResponseDTO {
 
     @JsonProperty("animalAge")
     @NotBlank(message = "Animal's age is required!")
-    private String animalAge;
+    private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
     private String animalSpecie;
 
-    @JsonProperty("animalBreed")
-    private String animalBreed;
+    @JsonProperty("animalDescription")
+    private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
     private Boolean animalIsCastrated;
@@ -56,7 +54,7 @@ public class AnimalResponseDTO {
         this.animalSex = animal.getAnimalSex();
         this.animalName = animal.getAnimalName();
         this.animalAge = animal.getAnimalAge();
-        this.animalBreed = animal.getAnimalBreed();
+        this.animalDescription = animal.getAnimalDescription();
         this.animalSpecie = animal.getAnimalSpecie();
         this.animalIsCastrated = animal.getAnimalIsCastrated();
         this.animalIsVaccinated = animal.getAnimalIsVaccinated();
