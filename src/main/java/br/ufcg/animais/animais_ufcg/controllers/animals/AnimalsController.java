@@ -22,5 +22,14 @@ public class AnimalsController {
                 .status(HttpStatus.CREATED)
                 .body(animalService.creatingAnimal(animalPostPutRequestDto));
     }
+
+
+    @GetMapping("/getAvailable")
+    public ResponseEntity<?> gettingAvaliableAnimals() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.getAvailableAnimals());
+
+    }
 }
  
