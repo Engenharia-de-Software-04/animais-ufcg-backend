@@ -8,6 +8,9 @@ import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AnimalServiceImpl implements AnimalService {
 
@@ -24,4 +27,16 @@ public class AnimalServiceImpl implements AnimalService {
         animalsRepository.save(animal);
         return modelMapper.map(animal, AnimalResponseDTO.class);
     }
+
+    @Override
+    public List<AnimalResponseDTO> getAllAnimals() {
+        List<Animal> animals = animalsRepository.findAll();
+        if(animals.isEmpty()){
+            throw new RuntimeException("Nenhum animal cadastrado");
+        }
+        return animals.stream()
+                .map(animal -> modelMapper.map(animal, AnimalResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }
