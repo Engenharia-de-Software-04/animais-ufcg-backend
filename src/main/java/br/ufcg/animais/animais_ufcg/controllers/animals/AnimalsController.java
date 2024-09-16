@@ -22,5 +22,12 @@ public class AnimalsController {
                 .status(HttpStatus.CREATED)
                 .body(animalService.creatingAnimal(animalPostPutRequestDto));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateAnimal(@PathVariable String id, @RequestBody @Valid AnimalPostPutRequestDTO animalPostPutRequestDto) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.updateAnimal(id, animalPostPutRequestDto));
+    }
 }
  
