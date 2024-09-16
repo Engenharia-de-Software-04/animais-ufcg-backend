@@ -8,6 +8,9 @@ import br.ufcg.animais.animais_ufcg.models.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.repositories.adoption_reports.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AdoptionReportServiceImpl implements AdoptionReportService {
 
@@ -23,5 +26,16 @@ public class AdoptionReportServiceImpl implements AdoptionReportService {
         AdoptionReport adoptionReport = modelMapper.map(adoptionReportPostPutRequestDTO, AdoptionReport.class);
         adoptionReportsRepository.save(adoptionReport);
         return modelMapper.map(adoptionReport, AdoptionReportsResponseDTO.class);
+    }
+
+    @Override
+    public List<AdoptionReportsResponseDTO> gettingAllReports() {
+        List<AdoptionReport> reports = adoptionReportsRepository.findAll();
+        if(reports.isEmpty()){
+            throw new RuntimeException("Nenhum relato cadastrado");
+        }
+        return reports.stream()
+                .map(report -> modelMapper.map(report, AdoptionReportsResponseDTO.class))
+                .collect(Collectors.toList());
     }
 }

@@ -21,5 +21,13 @@ public class AdoptionReportsController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(adoptionReportService.creatingAdoptionReport(adoptionReportsPostPutRequestDTO));
-    }    
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> gettingAllReports(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(adoptionReportService.gettingAllReports());
+    }
+
 }
