@@ -24,7 +24,7 @@ public class Animal {
     @JsonProperty("statusAnimal")
     @Field("statusAnimal")
     @Builder.Default
-    private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
+    private AnimalStatus statusAnimal = AnimalStatus.AVAILABLE;
 
     @JsonProperty("animalSex")
     @Field("animalSex")

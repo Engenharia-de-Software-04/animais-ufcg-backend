@@ -16,7 +16,7 @@ public class AnimalPostPutRequestDTO {
 
     @JsonProperty("statusAnimal")
     @Builder.Default
-    private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
+    private AnimalStatus statusAnimal = AnimalStatus.AVAILABLE;
 
     @JsonProperty("animalSex")
     @NotNull(message = "Animal's sex is required!")
