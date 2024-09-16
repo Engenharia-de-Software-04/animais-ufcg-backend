@@ -30,14 +30,14 @@ public class AnimalResponseDTO {
 
     @JsonProperty("animalAge")
     @NotBlank(message = "Animal's age is required!")
-    private AnimalAge animalAge;
+    private String animalAge;
 
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
     private String animalSpecie;
 
-    @JsonProperty("animalDescription")
-    private String animalDescription;
+    @JsonProperty("animalBreed")
+    private String animalBreed;
 
     @JsonProperty("animalIsCastrated")
     private Boolean animalIsCastrated;
@@ -54,7 +54,7 @@ public class AnimalResponseDTO {
         this.animalSex = animal.getAnimalSex();
         this.animalName = animal.getAnimalName();
         this.animalAge = animal.getAnimalAge();
-        this.animalDescription = animal.getAnimalDescription();
+        this.animalBreed = animal.getAnimalBreed();
         this.animalSpecie = animal.getAnimalSpecie();
         this.animalIsCastrated = animal.getAnimalIsCastrated();
         this.animalIsVaccinated = animal.getAnimalIsVaccinated();

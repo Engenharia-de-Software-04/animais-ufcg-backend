@@ -36,15 +36,16 @@ public class Animal {
 
     @JsonProperty("animalAge")
     @Field("animalAge")
-    private AnimalAge animalAge;
+    private String animalAge;
 
     @JsonProperty("animalSpecie")
     @Field("animalSpecie")
     private String animalSpecie;
 
-    @JsonProperty("animalDescription")
-    @Field("animalDescription")
-    private String animalDescription;
+    @JsonProperty("animalBreed")
+    @Field("animalBreed")
+    @Builder.Default
+    private String animalBreed = "Unknown";
 
     @JsonProperty("animalIsCastrated")
     @Field("animalIsCastrated")
