@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
+import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public AnimalResponseDTO updateAnimal(String id, AnimalPostPutRequestDTO animalPostPutRequestDTO) {
-        Animal animal = animalsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Animal not found with id: " + id));
-
+        Animal animal = animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
         modelMapper.map(animalPostPutRequestDTO, animal);
         animal.setId(id);
         animalsRepository.save(animal);
