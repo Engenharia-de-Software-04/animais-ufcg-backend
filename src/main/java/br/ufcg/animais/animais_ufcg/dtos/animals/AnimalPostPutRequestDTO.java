@@ -33,7 +33,7 @@ public class AnimalPostPutRequestDTO {
     private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
-    @NotBlank(message = "Animal's specie is required!")
+    @NotNull(message = "Animal's specie is required!")
     private String animalSpecie;
 
     @JsonProperty("animalDescription")
