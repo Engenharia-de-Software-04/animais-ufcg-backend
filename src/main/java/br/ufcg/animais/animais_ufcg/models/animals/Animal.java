@@ -36,24 +36,25 @@ public class Animal {
 
     @JsonProperty("animalAge")
     @Field("animalAge")
-    private String animalAge;
+    private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
     @Field("animalSpecie")
-    private String animalSpecie;
+    private AnimalSpecie animalSpecie;
 
-    @JsonProperty("animalBreed")
-    @Field("animalBreed")
-    @Builder.Default
-    private String animalBreed = "Unknown";
+    @JsonProperty("animalDescription")
+    @Field("animalDescription")
+    private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
     @Field("animalIsCastrated")
-    private Boolean animalIsCastrated;
+    @Builder.Default
+    private Boolean animalIsCastrated = false;
 
     @JsonProperty("animalIsVaccinated")
     @Field("animalIsVaccinated")
-    private Boolean animalIsVaccinated;
+    @Builder.Default
+    private Boolean animalIsVaccinated = false;
 
     @JsonProperty("photo")
     @Field("photo")

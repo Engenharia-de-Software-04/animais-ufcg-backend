@@ -32,7 +32,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login", "auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/animals/create", "/adoption_reports/create").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

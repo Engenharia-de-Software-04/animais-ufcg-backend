@@ -1,9 +1,10 @@
 package br.ufcg.animais.animais_ufcg.dtos.animals;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.ufcg.animais.animais_ufcg.models.animals.*;
-// import org.hibernate.validator.constraints.UUID;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -31,20 +32,24 @@ public class AnimalResponseDTO {
 
     @JsonProperty("animalAge")
     @NotBlank(message = "Animal's age is required!")
-    private String animalAge;
+    private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
-    private String animalSpecie;
+    private AnimalSpecie animalSpecie;
 
-    @JsonProperty("animalBreed")
-    private String animalBreed;
+    @JsonProperty("animalDescription")
+    private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
-    private Boolean animalIsCastrated;
+    @Field("animalIsCastrated")
+    @Builder.Default
+    private Boolean animalIsCastrated = false;
 
     @JsonProperty("animalIsVaccinated")
-    private Boolean animalIsVaccinated;
+    @Field("animalIsVaccinated")
+    @Builder.Default
+    private Boolean animalIsVaccinated = false;
 
     @JsonProperty("photo")
     private byte[] photo;
@@ -55,7 +60,7 @@ public class AnimalResponseDTO {
         this.animalSex = animal.getAnimalSex();
         this.animalName = animal.getAnimalName();
         this.animalAge = animal.getAnimalAge();
-        this.animalBreed = animal.getAnimalBreed();
+        this.animalDescription = animal.getAnimalDescription();
         this.animalSpecie = animal.getAnimalSpecie();
         this.animalIsCastrated = animal.getAnimalIsCastrated();
         this.animalIsVaccinated = animal.getAnimalIsVaccinated();

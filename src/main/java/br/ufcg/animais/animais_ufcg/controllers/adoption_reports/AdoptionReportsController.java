@@ -1,7 +1,5 @@
 package br.ufcg.animais.animais_ufcg.controllers.adoption_reports;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +9,10 @@ import jakarta.validation.Valid;
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.services.adoption_reports.*;
 
+@RestController
 @RequestMapping("/adoption_reports")
 public class AdoptionReportsController {
-
+    
     @Autowired
     AdoptionReportService adoptionReportService;
     
@@ -25,7 +24,7 @@ public class AdoptionReportsController {
     }
     
     @GetMapping("/get/{id}")    
-    public ResponseEntity<?> gettingAdoptionReport(@PathVariable UUID id) {
+    public ResponseEntity<?> gettingAdoptionReport(@PathVariable String id) {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(adoptionReportService.gettingAdoptionReport(id));
