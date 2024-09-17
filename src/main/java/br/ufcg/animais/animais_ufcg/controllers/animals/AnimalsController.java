@@ -25,11 +25,9 @@ public class AnimalsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAnimalById(@PathVariable String id) {
-        Animal animal = animalService.getAnimalById(id);
-        if (animal == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal not found");
-        }
-        return ResponseEntity.ok(animal);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.getAnimalById(id));
     }
 }
  
