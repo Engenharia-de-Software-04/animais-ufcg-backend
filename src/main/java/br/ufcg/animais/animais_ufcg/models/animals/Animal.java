@@ -2,10 +2,7 @@ package br.ufcg.animais.animais_ufcg.models.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.*;
 import lombok.*;

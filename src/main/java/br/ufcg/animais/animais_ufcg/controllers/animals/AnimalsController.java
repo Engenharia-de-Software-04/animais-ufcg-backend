@@ -10,7 +10,7 @@ import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.services.animals.*;
 
 @RestController
-@RequestMapping("/animal")
+@RequestMapping("/animals")
 public class AnimalsController {
     
     @Autowired

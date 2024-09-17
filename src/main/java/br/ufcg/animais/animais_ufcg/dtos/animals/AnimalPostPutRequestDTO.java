@@ -5,7 +5,6 @@ import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.util.*;
 
 @Data
 @Builder
@@ -29,11 +28,11 @@ public class AnimalPostPutRequestDTO {
     private String animalName;
 
     @JsonProperty("animalAge")
-    @NotBlank(message = "Animal's age is required!")
+    @NotNull(message = "Animal's age is required!")
     private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
-    @NotBlank(message = "Animal's specie is required!")
+    @NotNull(message = "Animal's specie is required!")
     private String animalSpecie;
 
     @JsonProperty("animalDescription")
