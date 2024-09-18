@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufcg.animais.animais_ufcg.domain.user.User;
-import br.ufcg.animais.animais_ufcg.dto.LoginResponseDTO;
+import br.ufcg.animais.animais_ufcg.dtos.login.LoginResponseDTO;
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import br.ufcg.animais.animais_ufcg.repositories.UserRepository;
