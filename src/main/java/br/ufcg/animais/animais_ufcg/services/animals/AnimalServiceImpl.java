@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
+import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,11 @@ public class AnimalServiceImpl implements AnimalService {
         Animal animal = modelMapper.map(animalPostPutRequestDTO, Animal.class);
         animalsRepository.save(animal);
         return modelMapper.map(animal, AnimalResponseDTO.class);
+    }
+
+    @Override
+    public AnimalResponseDTO getAnimalById(String id) {
+        Animal animal =  animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
+        return new AnimalResponseDTO(animal);
     }
 }
