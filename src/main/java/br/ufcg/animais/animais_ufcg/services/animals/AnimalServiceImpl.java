@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
+import br.ufcg.animais.animais_ufcg.exception.animals.AnimalAvailableNotFoundException;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AnimalServiceImpl implements AnimalService {
     public List<AnimalResponseDTO> getAvailableAnimals() {
         List<Animal> animals = animalsRepository.findByStatusAnimal(AnimalStatus.AVAILABLE);
         if(animals.isEmpty()){
-            throw new RuntimeException("Nenhum animal disponível encontrado");
+            throw new AnimalAvailableNotFoundException();
         }
         return animals.stream()
                 .map(animal->modelMapper.map(animal, AnimalResponseDTO.class))
