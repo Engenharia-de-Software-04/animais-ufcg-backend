@@ -31,4 +31,15 @@ public class AnimalServiceImpl implements AnimalService {
         Animal animal =  animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
         return new AnimalResponseDTO(animal);
     }
+
+    @Override
+    public AnimalResponseDTO updateAnimal(String id, AnimalPostPutRequestDTO animalPostPutRequestDTO) {
+        Animal animal = animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
+        modelMapper.map(animalPostPutRequestDTO, animal);
+        animal.setId(id);
+        animalsRepository.save(animal);
+        return modelMapper.map(animal, AnimalResponseDTO.class);
+    }
+
+
 }
