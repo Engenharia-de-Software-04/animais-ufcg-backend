@@ -8,6 +8,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 	Optional<User> findByEmail(String email);
 
 	default void delete(Optional<User> user) {
-        user.ifPresent(this::delete);
-    }
+		user.ifPresent(this::delete);
+	}
 }

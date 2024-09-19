@@ -4,6 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.*;
+
+import br.ufcg.animais.animais_ufcg.exceptions.CustomErrorType;
+import br.ufcg.animais.animais_ufcg.models.animals.Animal;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,7 +35,7 @@ import br.ufcg.animais.animais_ufcg.repositories.animals.AnimalsRepository;
 public class AnimalsTest {
     
     final String URI_ANIMALS = "/animal";
-    
+
     private String AUTH_TOKEN;
 
     @Autowired
@@ -39,8 +47,16 @@ public class AnimalsTest {
     @Autowired
     UserRepository userRepository;
 
+    Animal animal;
+
+    AnimalPostPutRequestDTO animalPostPutRequestDTO;
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
     @BeforeEach
     void setup() throws Exception {
+        objectMapper.registerModule(new JavaTimeModule());
+
         String username = "Admin";
         String password = "animaisUFCG";
         String email = "admin@ccc.ufcg.edu.br";
@@ -69,6 +85,30 @@ public class AnimalsTest {
         String token = loginResponseDTO.token();
 
         this.AUTH_TOKEN = token;
+
+        animal = animalsRepository.save(Animal.builder()
+                .statusAnimal(AnimalStatus.AVAILABLE)
+                .animalSex(AnimalSex.MALE)
+                .animalName("Teste77")
+                .animalAge(AnimalAge.YOUNG)
+                .animalSpecie(AnimalSpecie.DOG)
+                .animalDescription("Descricao qualquer")
+                .animalIsCastrated(true)
+                .animalIsVaccinated(true)
+                .photo("ZXhhbXBsZQ==".getBytes())
+                .build()
+        );
+        animalPostPutRequestDTO = AnimalPostPutRequestDTO.builder()
+                .statusAnimal(animal.getStatusAnimal())
+                .animalSex(animal.getAnimalSex())
+                .animalName(animal.getAnimalName())
+                .animalAge(animal.getAnimalAge())
+                .animalSpecie(animal.getAnimalSpecie())
+                .animalDescription(animal.getAnimalDescription())
+                .animalIsCastrated(animal.getAnimalIsCastrated())
+                .animalIsVaccinated(animal.getAnimalIsVaccinated())
+                .photo(animal.getPhoto())
+                .build();
     }
 
     @AfterEach
@@ -471,6 +511,116 @@ public class AnimalsTest {
             .content(json))
             .andExpect(status().isCreated())
             .andReturn();
+        }
+    }
+
+    @Nested
+    @DisplayName("Testing to recover animals by ID.")
+    class RecoverAnimalByID {
+
+        @Test
+        @DisplayName("When we look for an animal saved by ID")
+        void testWhenWeLookForAnAnimalSavedById() throws Exception {
+            // Arrange
+
+            // Act
+            String responseJsonString = driver.perform(get(URI_ANIMALS + "/" + animal.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(animalPostPutRequestDTO)))
+                    .andExpect(status().isOk()) // Codigo 200
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            AnimalResponseDTO resultado = objectMapper.readValue(responseJsonString, new TypeReference<>() {});
+
+            // Assert
+            assertAll(
+                    () -> assertEquals(animal.getId(), resultado.getId()),
+                    () -> assertEquals(animal.getStatusAnimal(), resultado.getStatusAnimal()),
+                    () -> assertEquals(animal.getAnimalSex(), resultado.getAnimalSex()),
+                    () -> assertEquals(animal.getAnimalName(), resultado.getAnimalName()),
+                    () -> assertEquals(animal.getAnimalAge(), resultado.getAnimalAge()),
+                    () -> assertEquals(animal.getAnimalSpecie(), resultado.getAnimalSpecie()),
+                    () -> assertEquals(animal.getAnimalDescription(), resultado.getAnimalDescription()),
+                    () -> assertEquals(animal.getAnimalIsCastrated(), resultado.getAnimalIsCastrated()),
+                    () -> assertEquals(animal.getAnimalIsVaccinated(), resultado.getAnimalIsVaccinated()),
+                    () -> assertArrayEquals(animal.getPhoto(), resultado.getPhoto())
+            );
+        }
+
+        @Test
+        @DisplayName("When we look for an animal invalid")
+        void testWhenWeLookForAnAnimalInvalid() throws Exception {
+            // Arrange
+
+            // Act
+            String responseJsonString = driver.perform(get(URI_ANIMALS + "/inexistente")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(animalPostPutRequestDTO)))
+                    .andExpect(status().isBadRequest()) // Codigo 400
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            CustomErrorType resultado = objectMapper.readValue(responseJsonString, CustomErrorType.class);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals("Animal not found!", resultado.getMessage())
+            );
+        }
+
+        @Test
+        @DisplayName("When we change a valid animal")
+        void testWhenWeChangeAValidAnimal() throws Exception {
+            // Arrange
+            String animalId = animal.getId();
+
+            // Act
+            String responseJsonString = driver.perform(put(URI_ANIMALS + "/update/" + animal.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .content(objectMapper.writeValueAsString(animalPostPutRequestDTO)))
+                    .andExpect(status().isOk()) // Codigo 200
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            Animal resultado = objectMapper.readValue(responseJsonString, Animal.AnimalBuilder.class).build();
+
+            // Assert
+            assertAll(
+                    () -> assertEquals(resultado.getId(), animalId),
+                    () -> assertEquals(resultado.getStatusAnimal(), animal.getStatusAnimal()),
+                    () -> assertEquals(resultado.getAnimalSex(), animal.getAnimalSex()),
+                    () -> assertEquals(resultado.getAnimalName(), animal.getAnimalName()),
+                    () -> assertEquals(resultado.getAnimalAge(), animal.getAnimalAge()),
+                    () -> assertEquals(resultado.getAnimalSpecie(), animal.getAnimalSpecie()),
+                    () -> assertEquals(resultado.getAnimalDescription(), animal.getAnimalDescription()),
+                    () -> assertEquals(resultado.getAnimalIsCastrated(), animal.getAnimalIsCastrated()),
+                    () -> assertEquals(resultado.getAnimalIsVaccinated(), animal.getAnimalIsVaccinated()),
+                    () -> assertArrayEquals(resultado.getPhoto(), animal.getPhoto())
+            );
+        }
+
+        @Test
+        @DisplayName("When we change a invalid animal")
+        void testWhenWeChangeAInvalidAnimal() throws Exception {
+            // Arrange
+
+            // Act
+            String responseJsonString = driver.perform(put(URI_ANIMALS + "/update/inexistente")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .content(objectMapper.writeValueAsString(animalPostPutRequestDTO)))
+                    .andExpect(status().isBadRequest()) // Codigo 400
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            CustomErrorType resultado = objectMapper.readValue(responseJsonString, CustomErrorType.class);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals("Animal not found!", resultado.getMessage())
+            );
         }
     }
 }

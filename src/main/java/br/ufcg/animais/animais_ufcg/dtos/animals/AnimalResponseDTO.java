@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -31,7 +32,7 @@ public class AnimalResponseDTO {
     private String animalName;
 
     @JsonProperty("animalAge")
-    @NotBlank(message = "Animal's age is required!")
+    @NotNull(message = "Animal's age is required!")
     private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
