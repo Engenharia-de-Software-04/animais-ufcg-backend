@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.exception;
+package br.ufcg.animais.animais_ufcg.exceptions;
 
 public class AnimaisUfcgException extends RuntimeException {
     public AnimaisUfcgException() {
