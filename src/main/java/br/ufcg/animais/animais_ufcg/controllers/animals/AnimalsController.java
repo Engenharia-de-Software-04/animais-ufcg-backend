@@ -15,7 +15,7 @@ public class AnimalsController {
     
     @Autowired
     AnimalService animalService;
-    
+
     @PostMapping("/create")
     public ResponseEntity<?> creatingAnimal(@RequestBody @Valid AnimalPostPutRequestDTO animalPostPutRequestDto) {
         return ResponseEntity
@@ -30,6 +30,18 @@ public class AnimalsController {
                 .status(HttpStatus.NO_CONTENT).body("");
     }
 
-    
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAnimalById(@PathVariable String id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.getAnimalById(id));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateAnimal(@PathVariable String id, @RequestBody @Valid AnimalPostPutRequestDTO animalPostPutRequestDto) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.updateAnimal(id, animalPostPutRequestDto));
+    }
 }
  

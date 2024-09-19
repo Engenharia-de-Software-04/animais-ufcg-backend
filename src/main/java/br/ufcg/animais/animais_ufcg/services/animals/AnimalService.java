@@ -7,5 +7,7 @@ public interface AnimalService {
     AnimalResponseDTO creatingAnimal(AnimalPostPutRequestDTO animalPostPutRequestDTO);
 
     void deleteAnimal(String id);
-    
+    AnimalResponseDTO getAnimalById(String id);
+    AnimalResponseDTO updateAnimal(String id, AnimalPostPutRequestDTO animalPostPutRequestDTO);
+
 }
