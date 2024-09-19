@@ -27,7 +27,7 @@ public class Animal {
     @JsonProperty("statusAnimal")
     @Field("statusAnimal")
     @Builder.Default
-    private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
+    private AnimalStatus statusAnimal = AnimalStatus.AVAILABLE;
 
     @JsonProperty("animalSex")
     @Field("animalSex")
@@ -39,16 +39,15 @@ public class Animal {
 
     @JsonProperty("animalAge")
     @Field("animalAge")
-    private String animalAge;
+    private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
     @Field("animalSpecie")
     private String animalSpecie;
 
-    @JsonProperty("animalBreed")
-    @Field("animalBreed")
-    @Builder.Default
-    private String animalBreed = "Unknown";
+    @JsonProperty("animalDescription")
+    @Field("animalDescription")
+    private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
     @Field("animalIsCastrated")

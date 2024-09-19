@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
+import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,10 @@ public class AnimalServiceImpl implements AnimalService {
     public List<AnimalResponseDTO> getAllAnimals() {
         List<Animal> animals = animalsRepository.findAll();
         if(animals.isEmpty()){
-            throw new RuntimeException("Nenhum animal cadastrado");
+            throw new AnimalNotFoundException();
         }
         return animals.stream()
                 .map(animal -> modelMapper.map(animal, AnimalResponseDTO.class))
                 .collect(Collectors.toList());
     }
-
 }
