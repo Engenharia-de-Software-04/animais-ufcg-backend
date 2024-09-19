@@ -4,7 +4,6 @@ import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.ufcg.animais.animais_ufcg.exception.AnimalNotExist;
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
@@ -28,7 +27,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void deleteAnimal(String id){
-        Animal animal = animalsRepository.findById(id).orElseThrow(AnimalNotExist::new);
+        Animal animal = animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
         animalsRepository.delete(animal);
     }
 
