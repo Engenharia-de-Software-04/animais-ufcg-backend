@@ -1,4 +1,5 @@
-package br.ufcg.animais.animais_ufcg.dtos.adoption_reports;
+package br.ufcg.animais.animais_ufcg.dto.animals;
+import br.ufcg.animais.animais_ufcg.models.animals.Animal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,9 +14,9 @@ public class AdoptionReportsPostPutRequestDTO {
     @JsonProperty("id")
     private String id;
 
-    // @JsonProperty("animal")
-    // @NotBlank(message = "An animal is required!")
-    // private Animal animal;
+     @JsonProperty("animal")
+     @NotBlank(message = "An animal is required!")
+     private Animal animal;
 
     @JsonProperty("animalOwnerName")
     @NotBlank(message = "Animal's owner name is required!")

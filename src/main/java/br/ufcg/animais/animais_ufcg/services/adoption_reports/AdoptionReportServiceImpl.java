@@ -1,9 +1,11 @@
 package br.ufcg.animais.animais_ufcg.services.adoption_reports;
 
+import br.ufcg.animais.animais_ufcg.dto.animals.AdoptionReportsPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dto.animals.AdoptionReportsResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.*;
+import br.ufcg.animais.animais_ufcg.dto.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.models.adoption_reports.*;
 import br.ufcg.animais.animais_ufcg.repositories.adoption_reports.*;
 import org.springframework.stereotype.Service;

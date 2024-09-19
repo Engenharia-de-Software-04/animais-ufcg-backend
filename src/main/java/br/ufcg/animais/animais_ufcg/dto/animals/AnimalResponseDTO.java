@@ -1,10 +1,11 @@
-package br.ufcg.animais.animais_ufcg.dtos.animals;
+package br.ufcg.animais.animais_ufcg.dto.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -18,7 +19,7 @@ public class AnimalResponseDTO {
 
     @JsonProperty("statusAnimal")
     @Builder.Default
-    private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
+    private AnimalStatus statusAnimal = AnimalStatus.AVAILABLE;
 
     @JsonProperty("animalSex")
     @NotBlank(message = "Animal's sex is required!")
@@ -29,15 +30,15 @@ public class AnimalResponseDTO {
     private String animalName;
 
     @JsonProperty("animalAge")
-    @NotBlank(message = "Animal's age is required!")
-    private String animalAge;
+    @NotNull(message = "Animal's age is required!")
+    private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
     private String animalSpecie;
 
-    @JsonProperty("animalBreed")
-    private String animalBreed;
+    @JsonProperty("animalDescription")
+    private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
     private Boolean animalIsCastrated;
@@ -54,7 +55,7 @@ public class AnimalResponseDTO {
         this.animalSex = animal.getAnimalSex();
         this.animalName = animal.getAnimalName();
         this.animalAge = animal.getAnimalAge();
-        this.animalBreed = animal.getAnimalBreed();
+        this.animalDescription = animal.getAnimalDescription();
         this.animalSpecie = animal.getAnimalSpecie();
         this.animalIsCastrated = animal.getAnimalIsCastrated();
         this.animalIsVaccinated = animal.getAnimalIsVaccinated();

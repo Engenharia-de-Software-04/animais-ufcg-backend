@@ -1,10 +1,11 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
+import br.ufcg.animais.animais_ufcg.dto.animals.animals.AnimalPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dto.animals.animals.AnimalResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 

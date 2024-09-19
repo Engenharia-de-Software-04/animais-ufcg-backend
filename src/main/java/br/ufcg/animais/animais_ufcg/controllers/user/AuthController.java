@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufcg.animais.animais_ufcg.domain.user.User;
-import br.ufcg.animais.animais_ufcg.dtos.login.LoginRequestDTO;
-import br.ufcg.animais.animais_ufcg.dtos.login.LoginResponseDTO;
-import br.ufcg.animais.animais_ufcg.dtos.login.RegisterRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.LoginRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.LoginResponseDTO;
+import br.ufcg.animais.animais_ufcg.dtos.RegisterRequestDTO;
 import br.ufcg.animais.animais_ufcg.infra.security.TokenService;
 import br.ufcg.animais.animais_ufcg.repositories.UserRepository;
 

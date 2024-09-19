@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.dtos.adoption_reports;
+package br.ufcg.animais.animais_ufcg.dto.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
