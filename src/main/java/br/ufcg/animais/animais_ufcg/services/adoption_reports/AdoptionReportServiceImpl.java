@@ -28,7 +28,7 @@ public class AdoptionReportServiceImpl implements AdoptionReportService {
     
     @Override
     public AdoptionReportsResponseDTO creatingAdoptionReport(AdoptionReportsPostPutRequestDTO adoptionReportPostPutRequestDTO) {
-        
+
         Animal animal = animalsRepository.findById(adoptionReportPostPutRequestDTO.getAnimalID()).orElseThrow(AnimalNotFound::new);
 
         if(animal.getStatusAnimal() == AnimalStatus.AVAILABLE) {throw new AnimalNotAdopted();}
