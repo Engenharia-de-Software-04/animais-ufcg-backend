@@ -1,6 +1,8 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFound;
+import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalAvailableNotFoundException;
+import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,9 @@ import org.springframework.stereotype.Service;
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnimalServiceImpl implements AnimalService {
@@ -41,5 +46,14 @@ public class AnimalServiceImpl implements AnimalService {
         return modelMapper.map(animal, AnimalResponseDTO.class);
     }
 
-
+    @Override
+    public List<AnimalResponseDTO> getAvailableAnimals() {
+        List<Animal> animals = animalsRepository.findByStatusAnimal(AnimalStatus.AVAILABLE);
+        if(animals.isEmpty()){
+            throw new AnimalAvailableNotFoundException();
+        }
+        return animals.stream()
+                .map(animal->modelMapper.map(animal, AnimalResponseDTO.class))
+                .collect(Collectors.toList());
+    }
 }

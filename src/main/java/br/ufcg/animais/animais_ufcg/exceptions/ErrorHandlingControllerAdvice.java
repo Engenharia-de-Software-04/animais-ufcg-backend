@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.exceptions;
 
+import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalAvailableNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,15 @@ public class ErrorHandlingControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public CustomErrorType onCommerceException(AnimaisUfcgException e) {
+        return defaultCustomErrorTypeConstruct(
+                e.getMessage()
+        );
+    }
+
+    @ExceptionHandler(AnimalAvailableNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public CustomErrorType onAnimalAvailableNotFoundException(AnimalAvailableNotFoundException e) {
         return defaultCustomErrorTypeConstruct(
                 e.getMessage()
         );

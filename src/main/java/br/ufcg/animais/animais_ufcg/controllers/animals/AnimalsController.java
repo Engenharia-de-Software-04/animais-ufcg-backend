@@ -36,5 +36,13 @@ public class AnimalsController {
                 .status(HttpStatus.OK)
                 .body(animalService.updateAnimal(id, animalPostPutRequestDto));
     }
+
+    @GetMapping("/getAvailable")
+    public ResponseEntity<?> gettingAvaliableAnimals() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.getAvailableAnimals());
+
+    }
 }
  
