@@ -19,7 +19,7 @@ public class AnimalResponseDTO {
 
     @JsonProperty("statusAnimal")
     @Builder.Default
-    private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
+    private AnimalStatus statusAnimal = AnimalStatus.AVAILABLE;
 
     @JsonProperty("animalSex")
     @NotBlank(message = "Animal's sex is required!")

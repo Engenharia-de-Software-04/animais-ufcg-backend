@@ -5,7 +5,6 @@ import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.util.*;
 
 @Data
 @Builder
@@ -18,7 +17,7 @@ public class AnimalPostPutRequestDTO {
 
     @JsonProperty("statusAnimal")
     @Builder.Default
-    private AnimalStatus statusAnimal = AnimalStatus.AVALIABLE;
+    private AnimalStatus statusAnimal = AnimalStatus.AVAILABLE;
 
     @JsonProperty("animalSex")
     @NotNull(message = "Animal's sex is required!")
