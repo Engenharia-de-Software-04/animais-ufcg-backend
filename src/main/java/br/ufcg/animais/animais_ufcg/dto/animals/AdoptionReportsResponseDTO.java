@@ -16,9 +16,9 @@ public class AdoptionReportsResponseDTO {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("animal")
-    @NotBlank(message = "An animal is required!")
-    private Animal animal;
+    @JsonProperty("animalID")
+    @NotBlank(message = "An animal's ID is required!")
+    private String animalID;
 
     @JsonProperty("animalOwnerName")
     @NotBlank(message = "Animal's owner name is required!")
@@ -33,7 +33,7 @@ public class AdoptionReportsResponseDTO {
 
     public AdoptionReportsResponseDTO(AdoptionReport adoptionReport) {
         this.id = adoptionReport.getId();
-        this.animal = adoptionReport.getAnimal();
+        this.animalID = adoptionReport.getAnimalID();
         this.animalOwnerName = adoptionReport.getAnimalOwnerName();
         this.adoptionReport = adoptionReport.getAdoptionReport();
         this.photo = adoptionReport.getPhoto();

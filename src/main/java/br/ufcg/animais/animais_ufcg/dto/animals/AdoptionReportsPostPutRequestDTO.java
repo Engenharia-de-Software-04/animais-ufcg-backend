@@ -14,9 +14,9 @@ public class AdoptionReportsPostPutRequestDTO {
     @JsonProperty("id")
     private String id;
 
-     @JsonProperty("animal")
-     @NotBlank(message = "An animal is required!")
-     private Animal animal;
+    @JsonProperty("animalID")
+    @NotBlank(message = "An animal's ID is required!")
+    private String animalID;
 
     @JsonProperty("animalOwnerName")
     @NotBlank(message = "Animal's owner name is required!")

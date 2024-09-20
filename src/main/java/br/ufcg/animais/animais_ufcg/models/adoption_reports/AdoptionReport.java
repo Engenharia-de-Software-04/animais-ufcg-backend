@@ -22,9 +22,9 @@ public class AdoptionReport {
     @Indexed(unique = true)
     private String id;
 
-    @JsonProperty("animal")
-    @Field("animal")
-    private Animal animal;
+    @JsonProperty("animalID")
+    @Field("animalID")
+    private String animalID;
 
     @JsonProperty("animalOwnerName")
     @Field("animalOwnerName")
