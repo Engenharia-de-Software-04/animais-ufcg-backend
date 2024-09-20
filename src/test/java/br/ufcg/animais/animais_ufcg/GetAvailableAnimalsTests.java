@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.controller;
+package br.ufcg.animais.animais_ufcg;
 
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("Animal Controller Tests")
-public class AnimalsControllerTests {
+public class GetAvailableAnimalsTests {
 
     final String URI_ANIMALS = "/animal";
 
