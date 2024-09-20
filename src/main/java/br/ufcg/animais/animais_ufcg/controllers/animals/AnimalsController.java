@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.services.animals.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/animal")
 public class AnimalsController {
@@ -43,6 +45,13 @@ public class AnimalsController {
                 .status(HttpStatus.OK)
                 .body(animalService.getAvailableAnimals());
 
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllAnimals(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(animalService.getAllAnimals());
     }
 }
  

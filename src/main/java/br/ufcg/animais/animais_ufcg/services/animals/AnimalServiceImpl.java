@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
+import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFoundException;
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFound;
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalAvailableNotFoundException;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
@@ -31,6 +32,8 @@ public class AnimalServiceImpl implements AnimalService {
         return modelMapper.map(animal, AnimalResponseDTO.class);
     }
 
+
+
     @Override
     public AnimalResponseDTO getAnimalById(String id) {
         Animal animal =  animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
@@ -54,6 +57,16 @@ public class AnimalServiceImpl implements AnimalService {
         }
         return animals.stream()
                 .map(animal->modelMapper.map(animal, AnimalResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<AnimalResponseDTO> getAllAnimals() {
+        List<Animal> animals = animalsRepository.findAll();
+        if(animals.isEmpty()){
+            throw new AnimalNotFoundException();
+        }
+        return animals.stream()
+                .map(animal -> modelMapper.map(animal, AnimalResponseDTO.class))
                 .collect(Collectors.toList());
     }
 }

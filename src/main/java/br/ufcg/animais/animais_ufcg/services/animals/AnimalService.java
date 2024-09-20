@@ -10,5 +10,6 @@ public interface AnimalService {
     AnimalResponseDTO getAnimalById(String id);
     AnimalResponseDTO updateAnimal(String id, AnimalPostPutRequestDTO animalPostPutRequestDTO);
     List<AnimalResponseDTO> getAvailableAnimals();
+    List<AnimalResponseDTO> getAllAnimals();
 
 }
