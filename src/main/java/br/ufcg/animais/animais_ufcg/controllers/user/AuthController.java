@@ -39,7 +39,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
+	public ResponseEntity<?> register(@RequestBody RegisterRequestDTO body) {
 		Optional<User> user = this.userRepository.findByEmail(body.email());
 		if (user.isEmpty()) {
 			User newUser = new User();
@@ -51,6 +51,6 @@ public class AuthController {
 			return ResponseEntity.ok(new LoginResponseDTO(newUser.getName(), token)); 			
 		}
 		
-		return ResponseEntity.badRequest().build();
+		return ResponseEntity.status(400).body("Email already exists");
 	}
 }
