@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg;
+package br.ufcg.animais.animais_ufcg.Junit_controllers;
 
 
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;

@@ -1,16 +1,13 @@
-package br.ufcg.animais.animais_ufcg;
+package br.ufcg.animais.animais_ufcg.Junit_controllers;
 
-import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
-import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsResponseDTO;
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
 import br.ufcg.animais.animais_ufcg.exceptions.CustomErrorType;
-import br.ufcg.animais.animais_ufcg.models.adoption_reports.AdoptionReport;
 import br.ufcg.animais.animais_ufcg.models.animals.Animal;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalAge;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalSex;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalSpecie;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
-import br.ufcg.animais.animais_ufcg.repositories.adoption_reports.AdoptionReportsRepository;
 import br.ufcg.animais.animais_ufcg.repositories.animals.AnimalsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,8 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("Animal Controller Tests")
-public class GetAllAdoptionReportsTests {
-    final String URI_REPORTS = "/adoption_report";
+public class GetAvailableAnimalsTests {
+
+    final String URI_ANIMALS = "/animal";
 
     @Autowired
     MockMvc driver;
@@ -42,22 +40,14 @@ public class GetAllAdoptionReportsTests {
     @Autowired
     AnimalsRepository animalsRepository;
 
-    @Autowired
-    AdoptionReportsRepository adoptionReportsRepository;
-
     ObjectMapper objectMapper = new ObjectMapper();
 
     Animal animal1;
     Animal animal2;
-
+    Animal animal3;
     AnimalPostPutRequestDTO animalPostPutRequestDTO1;
     AnimalPostPutRequestDTO animalPostPutRequestDTO2;
-
-    AdoptionReport report1;
-    AdoptionReport report2;
-
-    AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO1;
-    AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO2;
+    AnimalPostPutRequestDTO animalPostPutRequestDTO3;
 
     String jwtToken;
 
@@ -73,24 +63,47 @@ public class GetAllAdoptionReportsTests {
 
         jwtToken = objectMapper.readTree(loginResponse).get("token").asText();
 
+        animal3 = animalsRepository.save(Animal.builder()
+                .statusAnimal(AnimalStatus.ADOPTED)
+                .animalSex(AnimalSex.MALE)
+                .animalName("TesteAvailable3")
+                .animalAge(AnimalAge.ADULT)
+                .animalSpecie(AnimalSpecie.CAT)
+                .animalDescription("teste")
+                .animalIsCastrated(false)
+                .animalIsVaccinated(false)
+                .photo("ZXhhbXBsZQ==".getBytes())
+                .build()
+        );
+
+        animalPostPutRequestDTO3 = AnimalPostPutRequestDTO.builder()
+                .statusAnimal(animal3.getStatusAnimal())
+                .animalSex(animal3.getAnimalSex())
+                .animalName(animal3.getAnimalName())
+                .animalAge(animal3.getAnimalAge())
+                .animalSpecie(animal3.getAnimalSpecie())
+                .animalDescription(animal3.getAnimalDescription())
+                .animalIsCastrated(animal3.getAnimalIsCastrated())
+                .animalIsVaccinated(animal3.getAnimalIsVaccinated())
+                .photo(animal3.getPhoto())
+                .build();
     }
 
     @AfterEach
     void tearDown() {
-        adoptionReportsRepository.deleteAll();
         animalsRepository.deleteAll();
     }
 
     @Nested
-    @DisplayName("Tests with adoption reports registered")
+    @DisplayName("Tests with animals available")
     class AnimalRestAPIBasicFlowsVerification {
         @Test
-        @DisplayName("Test with one adoption report")
-        void testOneAdoptionReport() throws Exception {
+        @DisplayName("Test with only one animal available")
+        void testOneAnimalAvailable() throws Exception {
             animal1 = animalsRepository.save(Animal.builder()
                     .statusAnimal(AnimalStatus.AVAILABLE)
                     .animalSex(AnimalSex.FEMALE)
-                    .animalName("Nala")
+                    .animalName("TesteAvailable")
                     .animalAge(AnimalAge.YOUNG)
                     .animalSpecie(AnimalSpecie.DOG)
                     .animalDescription("teste")
@@ -112,45 +125,31 @@ public class GetAllAdoptionReportsTests {
                     .photo(animal1.getPhoto())
                     .build();
 
-
-            report1 = adoptionReportsRepository.save(AdoptionReport.builder()
-                    .animalID(animal1.getId())
-                    .animalOwnerName("Rohit")
-                    .adoptionReport("She's pretty")
-                    .photo("ZXhhbXBsZQ==".getBytes())
-                    .build()
-            );
-
-            adoptionReportsPostPutRequestDTO1 = AdoptionReportsPostPutRequestDTO.builder()
-                    .animalID(report1.getAnimalID())
-                    .animalOwnerName(report1.getAnimalOwnerName())
-                    .adoptionReport(report1.getAdoptionReport())
-                    .photo(report1.getPhoto())
-                    .build();
-
-            String json = driver.perform(get(URI_REPORTS + "/getAll")
+            String json = driver.perform(get(URI_ANIMALS + "/getAvailable")
+                            .header("Authorization", "Bearer " + jwtToken)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
-            List<AdoptionReportsResponseDTO> reports = objectMapper.readValue(json, new TypeReference<List<AdoptionReportsResponseDTO>>() {
+            List<AnimalResponseDTO> animals = objectMapper.readValue(json, new TypeReference<List<AnimalResponseDTO>>() {
             });
 
 
-            assertAll("First report",
-                    () -> assertFalse(reports.isEmpty()),
-                    () -> assertEquals(report1.getAnimalOwnerName(), reports.get(0).getAnimalOwnerName()),
-                    () -> assertEquals(report1.getAdoptionReport(), reports.get(0).getAdoptionReport())
+            assertAll("One animal",
+                    () -> assertFalse(animals.isEmpty()),
+                    () -> assertEquals(animal1.getAnimalName(), animals.get(0).getAnimalName()),
+                    () -> assertEquals(animal1.getAnimalSex(), animals.get(0).getAnimalSex()),
+                    () -> assertEquals(animal1.getAnimalAge(), animals.get(0).getAnimalAge())
             );
         }
 
         @Test
-        @DisplayName("Test with more than one adoption report")
-        void testMoreThanOneAdoptionReport() throws Exception {
+        @DisplayName("Test with more than one animal available")
+        void testMoreThanOneAnimalAvailable() throws Exception {
             animal1 = animalsRepository.save(Animal.builder()
                     .statusAnimal(AnimalStatus.AVAILABLE)
                     .animalSex(AnimalSex.FEMALE)
-                    .animalName("Nala")
+                    .animalName("TesteAvailable")
                     .animalAge(AnimalAge.YOUNG)
                     .animalSpecie(AnimalSpecie.DOG)
                     .animalDescription("teste")
@@ -160,22 +159,10 @@ public class GetAllAdoptionReportsTests {
                     .build()
             );
 
-            animalPostPutRequestDTO1 = AnimalPostPutRequestDTO.builder()
-                    .statusAnimal(animal1.getStatusAnimal())
-                    .animalSex(animal1.getAnimalSex())
-                    .animalName(animal1.getAnimalName())
-                    .animalAge(animal1.getAnimalAge())
-                    .animalSpecie(animal1.getAnimalSpecie())
-                    .animalDescription(animal1.getAnimalDescription())
-                    .animalIsCastrated(animal1.getAnimalIsCastrated())
-                    .animalIsVaccinated(animal1.getAnimalIsVaccinated())
-                    .photo(animal1.getPhoto())
-                    .build();
-
             animal2 = animalsRepository.save(Animal.builder()
                     .statusAnimal(AnimalStatus.AVAILABLE)
                     .animalSex(AnimalSex.MALE)
-                    .animalName("Teddy")
+                    .animalName("TesteAvailable2")
                     .animalAge(AnimalAge.SENIOR)
                     .animalSpecie(AnimalSpecie.CAT)
                     .animalDescription("teste")
@@ -184,6 +171,18 @@ public class GetAllAdoptionReportsTests {
                     .photo("ZXhhbXBsZQ==".getBytes())
                     .build()
             );
+
+            animalPostPutRequestDTO1 = AnimalPostPutRequestDTO.builder()
+                    .statusAnimal(animal1.getStatusAnimal())
+                    .animalSex(animal1.getAnimalSex())
+                    .animalName(animal1.getAnimalName())
+                    .animalAge(animal1.getAnimalAge())
+                    .animalSpecie(animal1.getAnimalSpecie())
+                    .animalDescription(animal1.getAnimalDescription())
+                    .animalIsCastrated(animal1.getAnimalIsCastrated())
+                    .animalIsVaccinated(animal1.getAnimalIsVaccinated())
+                    .photo(animal1.getPhoto())
+                    .build();
 
             animalPostPutRequestDTO2 = AnimalPostPutRequestDTO.builder()
                     .statusAnimal(animal2.getStatusAnimal())
@@ -197,61 +196,33 @@ public class GetAllAdoptionReportsTests {
                     .photo(animal2.getPhoto())
                     .build();
 
-            report1 = adoptionReportsRepository.save(AdoptionReport.builder()
-                    .animalID(animal1.getId())
-                    .animalOwnerName("Rohit")
-                    .adoptionReport("She's pretty")
-                    .photo("ZXhhbXBsZQ==".getBytes())
-                    .build()
-            );
-
-            adoptionReportsPostPutRequestDTO1 = AdoptionReportsPostPutRequestDTO.builder()
-                    .animalID(report1.getAnimalID())
-                    .animalOwnerName(report1.getAnimalOwnerName())
-                    .adoptionReport(report1.getAdoptionReport())
-                    .photo(report1.getPhoto())
-                    .build();
-
-            report2 = adoptionReportsRepository.save(AdoptionReport.builder()
-                    .animalID(animal2.getId())
-                    .animalOwnerName("Francisco")
-                    .adoptionReport("He's so funny")
-                    .photo("ZXhhbXBsZQ==".getBytes())
-                    .build()
-            );
-
-            adoptionReportsPostPutRequestDTO2 = AdoptionReportsPostPutRequestDTO.builder()
-                    .animalID(report2.getAnimalID())
-                    .animalOwnerName(report2.getAnimalOwnerName())
-                    .adoptionReport(report2.getAdoptionReport())
-                    .photo(report2.getPhoto())
-                    .build();
-
-            String json = driver.perform(get(URI_REPORTS + "/getAll")
+            String json = driver.perform(get(URI_ANIMALS + "/getAvailable")
+                            .header("Authorization", "Bearer " + jwtToken)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
-            List<AdoptionReportsResponseDTO> reports = objectMapper.readValue(json, new TypeReference<List<AdoptionReportsResponseDTO>>() {
-            });
 
+            List<AnimalResponseDTO> animals = objectMapper.readValue(json, new TypeReference<List<AnimalResponseDTO>>() {});
 
-            assertAll("First report",
-                    () -> assertFalse(reports.isEmpty()),
-                    () -> assertEquals(report1.getAnimalOwnerName(), reports.get(0).getAnimalOwnerName()),
-                    () -> assertEquals(report1.getAdoptionReport(), reports.get(0).getAdoptionReport())
+            assertEquals(2, animals.size(), "There should be two available animals");
+            assertAll("First animal",
+                    () -> assertEquals(animal1.getAnimalName(), animals.get(0).getAnimalName()),
+                    () -> assertEquals(animal1.getAnimalSex(), animals.get(0).getAnimalSex()),
+                    () -> assertEquals(animal1.getAnimalAge(), animals.get(0).getAnimalAge())
             );
-            assertAll("Second report",
-                    () -> assertFalse(reports.isEmpty()),
-                    () -> assertEquals(report2.getAnimalOwnerName(), reports.get(1).getAnimalOwnerName()),
-                    () -> assertEquals(report2.getAdoptionReport(), reports.get(1).getAdoptionReport())
+
+            assertAll("Second animal",
+                    () -> assertEquals(animal2.getAnimalName(), animals.get(1).getAnimalName()),
+                    () -> assertEquals(animal2.getAnimalSex(), animals.get(1).getAnimalSex()),
+                    () -> assertEquals(animal2.getAnimalAge(), animals.get(1).getAnimalAge())
             );
         }
 
         @Test
-        @DisplayName("Test with no adoption report registered")
-        void testNoAdoptionReportRegistered() throws Exception {
-            String responseJsonString = driver.perform(get(URI_REPORTS + "/getAll")
+        @DisplayName("Test with no animal available")
+        void testNoAnimalAvailable() throws Exception {
+            String responseJsonString = driver.perform(get(URI_ANIMALS + "/getAvailable")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound())
                     .andDo(print())
@@ -259,8 +230,9 @@ public class GetAllAdoptionReportsTests {
             CustomErrorType result = objectMapper.readValue(responseJsonString, CustomErrorType.class);
 
             assertAll(
-                    () -> assertEquals("Report not registered", result.getMessage())
+                    () -> assertEquals("No animal available", result.getMessage())
             );
         }
     }
 }
+

@@ -1,7 +1,6 @@
 package br.ufcg.animais.animais_ufcg.controllers.adoption_reports;
 
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
-import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
