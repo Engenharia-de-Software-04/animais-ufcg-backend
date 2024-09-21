@@ -62,7 +62,10 @@ public class AdoptionReportServiceImpl implements AdoptionReportService {
 
     @Override
     public void deleteAdoptionReport(String id) {
-        AdoptionReport adoptionReport = adoptionReportsRepository.findById(id).orElseThrow(AdoptionReportNotFound::new);
+        if (adoptionReportsRepository.findById(id).isEmpty()){
+            throw new ReportNotFoundException();
+        }
         adoptionReportsRepository.deleteById(id);
     }
+
 }
