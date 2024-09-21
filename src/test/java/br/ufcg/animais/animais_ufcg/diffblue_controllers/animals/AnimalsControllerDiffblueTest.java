@@ -3,6 +3,7 @@ package br.ufcg.animais.animais_ufcg.diffblue_controllers.animals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import br.ufcg.animais.animais_ufcg.controllers.animals.AnimalsController;
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalAge;

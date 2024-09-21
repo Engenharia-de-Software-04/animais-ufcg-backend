@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.controllers.user;
+package br.ufcg.animais.animais_ufcg.diffblue_controllers.user;
 
 import java.util.Optional;
 
