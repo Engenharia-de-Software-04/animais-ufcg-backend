@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg;
+package br.ufcg.animais.animais_ufcg.Junit_controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

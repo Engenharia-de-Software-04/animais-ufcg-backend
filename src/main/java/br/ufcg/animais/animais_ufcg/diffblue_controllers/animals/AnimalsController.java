@@ -12,8 +12,6 @@ import jakarta.validation.Valid;
 
 import br.ufcg.animais.animais_ufcg.services.animals.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/animal")
 public class AnimalsController {
