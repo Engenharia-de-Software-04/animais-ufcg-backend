@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.exceptions;
 
+import br.ufcg.animais.animais_ufcg.exceptions.adoption_reports.ReportNotFoundException;
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalAvailableNotFoundException;
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFoundException;
 import jakarta.validation.ConstraintViolation;
@@ -79,6 +80,14 @@ public class ErrorHandlingControllerAdvice {
                 e.getMessage()
         );
     }
-
+    
+    @ExceptionHandler(ReportNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public CustomErrorType onReportNotFoundException(ReportNotFoundException e) {
+        return defaultCustomErrorTypeConstruct(
+                e.getMessage()
+        );
+    }
 }
 

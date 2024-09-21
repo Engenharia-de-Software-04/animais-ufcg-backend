@@ -36,11 +36,12 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/auth/login", "auth/register").permitAll()
             .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
-            .requestMatchers(HttpMethod.GET, "/adoption_report/get/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/adoption_report/getAll", "adoption_report/get/{id}").permitAll()
             .requestMatchers(HttpMethod.GET, "/animal/getAvailable", "/animal/{id}").permitAll()
             .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

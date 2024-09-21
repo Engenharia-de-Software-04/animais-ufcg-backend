@@ -4,6 +4,8 @@ import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFoundException;
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalNotFound;
 import br.ufcg.animais.animais_ufcg.exceptions.animals.AnimalAvailableNotFoundException;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
