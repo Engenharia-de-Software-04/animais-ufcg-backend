@@ -1,6 +1,7 @@
 package br.ufcg.animais.animais_ufcg.controllers.adoption_reports;
 
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,12 @@ public class AdoptionReportsController {
     public ResponseEntity<?> deleteAdoptionReport(@PathVariable String id){
         adoptionReportService.deleteAdoptionReport(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateAdoptionReport(@PathVariable String id, @RequestBody @Valid AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(adoptionReportService.updateAdoptionReport(id, adoptionReportsPostPutRequestDTO));
     }
 }
