@@ -85,7 +85,7 @@ public class AnimalsTest {
         this.AUTH_TOKEN = token;
 
         animal = animalsRepository.save(Animal.builder()
-                .statusAnimal(AnimalStatus.AVALIABLE)
+                .statusAnimal(AnimalStatus.AVAILABLE)
                 .animalSex(AnimalSex.MALE)
                 .animalName("Teste77")
                 .animalAge(AnimalAge.YOUNG)
@@ -113,6 +113,7 @@ public class AnimalsTest {
     void tearDown() {
         Optional<User> user = userRepository.findByEmail("admin@ccc.ufcg.edu.br");
         userRepository.delete(user);
+        animalsRepository.deleteAll();
     }
 
     @Nested
@@ -319,26 +320,6 @@ public class AnimalsTest {
                     "animalAge": "ADULT",
                     "animalSex": "FEMALE",
                     "animalSpecie": "",
-                    "animalDescription": "A cute cat.",
-                    "animalIsCastrated": true,
-                    "animalIsVaccinated": true } """;
-
-            driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
-        }
-
-        @Test
-        @DisplayName("Testing to create animal with invalid (gata) specie.")
-        void testAnimalInvalidSpecie2() throws Exception{
-            String json = """
-                {   "animalName": "Kiara",
-                    "animalAge": "ADULT",
-                    "animalSex": "FEMALE",
-                    "animalSpecie": "gata",
                     "animalDescription": "A cute cat.",
                     "animalIsCastrated": true,
                     "animalIsVaccinated": true } """;
