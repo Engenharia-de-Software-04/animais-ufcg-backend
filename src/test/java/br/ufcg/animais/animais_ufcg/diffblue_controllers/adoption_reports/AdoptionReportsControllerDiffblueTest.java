@@ -3,6 +3,7 @@ package br.ufcg.animais.animais_ufcg.diffblue_controllers.adoption_reports;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import br.ufcg.animais.animais_ufcg.controllers.adoption_reports.AdoptionReportsController;
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsResponseDTO;
 import br.ufcg.animais.animais_ufcg.services.adoption_reports.AdoptionReportService;
