@@ -1,5 +1,6 @@
 package br.ufcg.animais.animais_ufcg.controllers.animals;
 
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,14 @@ public class AnimalsController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(animalService.creatingAnimal(animalPostPutRequestDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAnimal(@PathVariable String id){
+            // Chama o serviço para deletar o animal
+            animalService.deleteAnimal(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(""); // Retorna 204 No Content quando deletado
+
     }
 
     @GetMapping("/{id}")

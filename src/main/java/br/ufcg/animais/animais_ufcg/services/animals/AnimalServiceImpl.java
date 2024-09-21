@@ -7,12 +7,12 @@ import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +32,14 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
 
+
+    @Override
+    public void deleteAnimal(String id){
+        if (animalsRepository.findById(id).isEmpty()){
+            throw new AnimalNotFoundException();
+        }
+        animalsRepository.deleteById(id);
+    }
 
     @Override
     public AnimalResponseDTO getAnimalById(String id) {

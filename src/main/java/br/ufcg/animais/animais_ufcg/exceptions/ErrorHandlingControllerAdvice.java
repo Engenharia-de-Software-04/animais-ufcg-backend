@@ -61,6 +61,7 @@ public class ErrorHandlingControllerAdvice {
         );
     }
 
+
     @ExceptionHandler(AnimalAvailableNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
@@ -80,3 +81,4 @@ public class ErrorHandlingControllerAdvice {
     }
 
 }
+
