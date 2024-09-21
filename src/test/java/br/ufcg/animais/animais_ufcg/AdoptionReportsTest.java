@@ -2,9 +2,11 @@ package br.ufcg.animais.animais_ufcg;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.*;
 
+import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -48,9 +50,16 @@ public class AdoptionReportsTest {
     @Autowired
     UserRepository userRepository;
 
+    AdoptionReport adoptionReport;
+
+    AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO;
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
     @BeforeEach
     void setup() throws Exception {
-        
+        objectMapper.registerModule(new JavaTimeModule());
+
         String username = "Admin";
         String password = "animaisUFCG";
         String email = "admin@ccc.ufcg.edu.br";
@@ -79,12 +88,29 @@ public class AdoptionReportsTest {
         String token = loginResponseDTO.token();
 
         this.AUTH_TOKEN = token;
+
+        adoptionReport = adoptionReportsRepository.save(AdoptionReport.builder()
+                .animalID("animalIdTeste")
+                .animalOwnerName("Owner Teste")
+                .adoptionReport("Report Teste")
+                .photo("ZXhhbXBsZQ==".getBytes())
+                .build());
+
+        adoptionReportsPostPutRequestDTO = AdoptionReportsPostPutRequestDTO.builder()
+                .id(adoptionReport.getId())
+                .animalID(adoptionReport.getAnimalID())
+                .animalOwnerName(adoptionReport.getAnimalOwnerName())
+                .adoptionReport(adoptionReport.getAdoptionReport())
+                .photo(adoptionReport.getPhoto())
+                .build();
     }
 
     @AfterEach
     void tearDown() {
         Optional<User> user = userRepository.findByEmail("admin@ccc.ufcg.edu.br");
         userRepository.delete(user);
+        adoptionReportsRepository.deleteAll();
+        animalsRepository.deleteAll();
     }
 
     @Nested
@@ -363,6 +389,60 @@ public class AdoptionReportsTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+        }
+    }
+
+    @Nested
+    @DisplayName("Testing to update adoption reports.")
+    class UpdateAdoptionReport {
+
+        @Test
+        @DisplayName("When we change a valid adoption report")
+        void testWhenWeChangeAValidAdoptionReport() throws Exception {
+            // Arrange
+            String reportId = adoptionReport.getId();
+
+            // Act
+            String responseJsonString = driver.perform(put(URI_ADOPTION_REPORT + "/update/" + reportId)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .content(objectMapper.writeValueAsString(adoptionReportsPostPutRequestDTO)))
+                    .andExpect(status().isOk()) // Código 200
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            AdoptionReport resultado = objectMapper.readValue(responseJsonString, AdoptionReport.class);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals(resultado.getId(), reportId),
+                    () -> assertEquals(resultado.getAnimalID(), adoptionReport.getAnimalID()),
+                    () -> assertEquals(resultado.getAnimalOwnerName(), adoptionReport.getAnimalOwnerName()),
+                    () -> assertEquals(resultado.getAdoptionReport(), adoptionReport.getAdoptionReport()),
+                    () -> assertArrayEquals(resultado.getPhoto(), adoptionReport.getPhoto())
+            );
+        }
+
+        @Test
+        @DisplayName("When we change an invalid adoption report")
+        void testWhenWeChangeAnInvalidAdoptionReport() throws Exception {
+            // Arrange
+
+            // Act
+            String responseJsonString = driver.perform(put(URI_ADOPTION_REPORT + "/update/inexistente")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .content(objectMapper.writeValueAsString(adoptionReportsPostPutRequestDTO)))
+                    .andExpect(status().isBadRequest()) // Código 400
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
+
+            CustomErrorType resultado = objectMapper.readValue(responseJsonString, CustomErrorType.class);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals("Adoption report not found!", resultado.getMessage())
+            );
         }
     }
 }

@@ -2,6 +2,7 @@ package br.ufcg.animais.animais_ufcg.services.adoption_reports;
 
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
 import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsResponseDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
 import br.ufcg.animais.animais_ufcg.exceptions.adoption_reports.ReportNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,14 @@ public class AdoptionReportServiceImpl implements AdoptionReportService {
         return reports.stream()
                 .map(report -> modelMapper.map(report, AdoptionReportsResponseDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AdoptionReportsResponseDTO updateAdoptionReport(String id, AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO) {
+        AdoptionReport adoptionReport = adoptionReportsRepository.findById(id).orElseThrow(AdoptionReportNotFound::new);
+        modelMapper.map(adoptionReportsPostPutRequestDTO, adoptionReport);
+        adoptionReport.setId(id);
+        adoptionReportsRepository.save(adoptionReport);
+        return modelMapper.map(adoptionReport, AdoptionReportsResponseDTO.class);
     }
 }
