@@ -30,18 +30,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configure(http))
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/animal/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/animal/getAvailable").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+            .cors(cors -> cors.configure(http))
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(HttpMethod.POST, "/auth/login", "auth/register").permitAll()
+            .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
+            .requestMatchers(HttpMethod.GET, "/adoption_report/get/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/animal/**").permitAll()
+            .anyRequest().authenticated()
+            )
+            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

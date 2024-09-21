@@ -1,5 +1,7 @@
 package br.ufcg.animais.animais_ufcg.dtos.animals;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.ufcg.animais.animais_ufcg.models.animals.*;
@@ -35,16 +37,20 @@ public class AnimalResponseDTO {
 
     @JsonProperty("animalSpecie")
     @NotBlank(message = "Animal's specie is required!")
-    private String animalSpecie;
+    private AnimalSpecie animalSpecie;
 
     @JsonProperty("animalDescription")
     private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
-    private Boolean animalIsCastrated;
+    @Field("animalIsCastrated")
+    @Builder.Default
+    private Boolean animalIsCastrated = false;
 
     @JsonProperty("animalIsVaccinated")
-    private Boolean animalIsVaccinated;
+    @Field("animalIsVaccinated")
+    @Builder.Default
+    private Boolean animalIsVaccinated = false;
 
     @JsonProperty("photo")
     private byte[] photo;

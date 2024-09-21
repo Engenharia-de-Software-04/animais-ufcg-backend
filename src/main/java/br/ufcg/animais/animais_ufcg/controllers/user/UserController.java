@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.controllers;
+package br.ufcg.animais.animais_ufcg.controllers.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -40,7 +40,7 @@ public class Animal {
 
     @JsonProperty("animalSpecie")
     @Field("animalSpecie")
-    private String animalSpecie;
+    private AnimalSpecie animalSpecie;
 
     @JsonProperty("animalDescription")
     @Field("animalDescription")
@@ -48,11 +48,13 @@ public class Animal {
 
     @JsonProperty("animalIsCastrated")
     @Field("animalIsCastrated")
-    private Boolean animalIsCastrated;
+    @Builder.Default
+    private Boolean animalIsCastrated = false;
 
     @JsonProperty("animalIsVaccinated")
     @Field("animalIsVaccinated")
-    private Boolean animalIsVaccinated;
+    @Builder.Default
+    private Boolean animalIsVaccinated = false;
 
     @JsonProperty("photo")
     @Field("photo")

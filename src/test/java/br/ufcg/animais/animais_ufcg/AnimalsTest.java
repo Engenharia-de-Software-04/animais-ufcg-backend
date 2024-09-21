@@ -2,9 +2,9 @@ package br.ufcg.animais.animais_ufcg;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import br.ufcg.animais.animais_ufcg.exceptions.CustomErrorType;
 import br.ufcg.animais.animais_ufcg.models.animals.Animal;
@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufcg.animais.animais_ufcg.domain.user.User;
-import br.ufcg.animais.animais_ufcg.dto.LoginResponseDTO;
+import br.ufcg.animais.animais_ufcg.dtos.login.LoginResponseDTO;
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
 import br.ufcg.animais.animais_ufcg.repositories.UserRepository;
@@ -31,7 +31,7 @@ import br.ufcg.animais.animais_ufcg.repositories.animals.AnimalsRepository;
 @AutoConfigureMockMvc
 @DisplayName("Animal's Test Handler")
 public class AnimalsTest {
-
+    
     final String URI_ANIMALS = "/animal";
 
     private String AUTH_TOKEN;
@@ -65,16 +65,16 @@ public class AnimalsTest {
             "email": "%s",
             "password": "%s"
         }""", username, email, password);
-
+        
         driver.perform(post("/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonRegister))
-                .andExpect(status().isOk())
-                .andReturn();
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonRegister))
+            .andExpect(status().isOk())
+            .andReturn();
 
         MvcResult result1 = driver.perform(post("/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonRegister))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRegister))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -89,7 +89,7 @@ public class AnimalsTest {
                 .animalSex(AnimalSex.MALE)
                 .animalName("Teste77")
                 .animalAge(AnimalAge.YOUNG)
-                .animalSpecie("Dog")
+                .animalSpecie(AnimalSpecie.DOG)
                 .animalDescription("Descricao qualquer")
                 .animalIsCastrated(true)
                 .animalIsVaccinated(true)
@@ -122,6 +122,25 @@ public class AnimalsTest {
 
         @Test
         @DisplayName("Testing to create animal with valid data. (DOG | MALE | YOUNG)")
+        void testCreateValidAnimalWithNoAuthentication() throws Exception {
+            String json = """
+                {   "animalName": "Thor",
+                    "animalAge": "YOUNG",
+                    "animalSex": "MALE",
+                    "animalSpecie": "DOG",
+                    "animalDescription": "A cute dog.",
+                    "animalIsCastrated": true,
+                    "animalIsVaccinated": true } """;
+
+            driver.perform(post(URI_ANIMALS + "/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isForbidden())
+                .andReturn();
+        }
+
+        @Test
+        @DisplayName("Testing to create animal with valid data. (DOG | MALE | YOUNG)")
         void testCreateValidAnimal() throws Exception {
             String json = """
                 {   "animalName": "Thor",
@@ -133,23 +152,23 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             MvcResult result = driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
 
             String responseBody = result.getResponse().getContentAsString();
             AnimalResponseDTO animalResponseDTO = new ObjectMapper().readValue(responseBody, AnimalResponseDTO.class);
-
+            
             assertAll(
-                    () -> assertEquals("Thor", animalResponseDTO.getAnimalName()),
-                    () -> assertEquals(AnimalAge.YOUNG, animalResponseDTO.getAnimalAge()),
-                    () -> assertEquals(AnimalSex.MALE, animalResponseDTO.getAnimalSex()),
-                    () -> assertEquals("DOG", animalResponseDTO.getAnimalSpecie()),
-                    () -> assertEquals("A cute dog.", animalResponseDTO.getAnimalDescription()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
+                () -> assertEquals("Thor", animalResponseDTO.getAnimalName()),
+                () -> assertEquals(AnimalAge.YOUNG, animalResponseDTO.getAnimalAge()),
+                () -> assertEquals(AnimalSex.MALE, animalResponseDTO.getAnimalSex()),
+                () -> assertEquals(AnimalSpecie.DOG, animalResponseDTO.getAnimalSpecie()),
+                () -> assertEquals("A cute dog.", animalResponseDTO.getAnimalDescription()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
             );
         }
 
@@ -166,23 +185,23 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             MvcResult result = driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
 
             String responseBody = result.getResponse().getContentAsString();
             AnimalResponseDTO animalResponseDTO = new ObjectMapper().readValue(responseBody, AnimalResponseDTO.class);
-
+            
             assertAll(
-                    () -> assertEquals("Kiara", animalResponseDTO.getAnimalName()),
-                    () -> assertEquals(AnimalAge.ADULT, animalResponseDTO.getAnimalAge()),
-                    () -> assertEquals(AnimalSex.FEMALE, animalResponseDTO.getAnimalSex()),
-                    () -> assertEquals("CAT", animalResponseDTO.getAnimalSpecie()),
-                    () -> assertEquals("A cute cat.", animalResponseDTO.getAnimalDescription()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
+                () -> assertEquals("Kiara", animalResponseDTO.getAnimalName()),
+                () -> assertEquals(AnimalAge.ADULT, animalResponseDTO.getAnimalAge()),
+                () -> assertEquals(AnimalSex.FEMALE, animalResponseDTO.getAnimalSex()),
+                () -> assertEquals(AnimalSpecie.CAT, animalResponseDTO.getAnimalSpecie()),
+                () -> assertEquals("A cute cat.", animalResponseDTO.getAnimalDescription()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
             );
         }
 
@@ -199,23 +218,23 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             MvcResult result = driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
 
             String responseBody = result.getResponse().getContentAsString();
             AnimalResponseDTO animalResponseDTO = new ObjectMapper().readValue(responseBody, AnimalResponseDTO.class);
-
+            
             assertAll(
-                    () -> assertEquals("Kitty", animalResponseDTO.getAnimalName()),
-                    () -> assertEquals(AnimalAge.SENIOR, animalResponseDTO.getAnimalAge()),
-                    () -> assertEquals(AnimalSex.FEMALE, animalResponseDTO.getAnimalSex()),
-                    () -> assertEquals("CAT", animalResponseDTO.getAnimalSpecie()),
-                    () -> assertEquals("A cute cat.", animalResponseDTO.getAnimalDescription()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
+                () -> assertEquals("Kitty", animalResponseDTO.getAnimalName()),
+                () -> assertEquals(AnimalAge.SENIOR, animalResponseDTO.getAnimalAge()),
+                () -> assertEquals(AnimalSex.FEMALE, animalResponseDTO.getAnimalSex()),
+                () -> assertEquals(AnimalSpecie.CAT, animalResponseDTO.getAnimalSpecie()),
+                () -> assertEquals("A cute cat.", animalResponseDTO.getAnimalDescription()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
             );
         }
 
@@ -232,23 +251,23 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             MvcResult result = driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+                .header("Authorization", "Bearer " + AUTH_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isCreated())
+                .andReturn();
 
             String responseBody = result.getResponse().getContentAsString();
             AnimalResponseDTO animalResponseDTO = new ObjectMapper().readValue(responseBody, AnimalResponseDTO.class);
-
+            
             assertAll(
-                    () -> assertEquals("Kitty", animalResponseDTO.getAnimalName()),
-                    () -> assertEquals(AnimalAge.SENIOR, animalResponseDTO.getAnimalAge()),
-                    () -> assertEquals(AnimalSex.FEMALE, animalResponseDTO.getAnimalSex()),
-                    () -> assertEquals("OTHER", animalResponseDTO.getAnimalSpecie()),
-                    () -> assertEquals("A cute cat.", animalResponseDTO.getAnimalDescription()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
-                    () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
+                () -> assertEquals("Kitty", animalResponseDTO.getAnimalName()),
+                () -> assertEquals(AnimalAge.SENIOR, animalResponseDTO.getAnimalAge()),
+                () -> assertEquals(AnimalSex.FEMALE, animalResponseDTO.getAnimalSex()),
+                () -> assertEquals(AnimalSpecie.OTHER, animalResponseDTO.getAnimalSpecie()),
+                () -> assertEquals("A cute cat.", animalResponseDTO.getAnimalDescription()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsCastrated()),
+                () -> assertTrue(animalResponseDTO.getAnimalIsVaccinated())
             );
         }
 
@@ -265,11 +284,11 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
         }
 
         @Test
@@ -285,11 +304,11 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
         }
 
         @Test
@@ -305,11 +324,11 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
         }
 
         @Test
@@ -325,13 +344,33 @@ public class AnimalsTest {
                     "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
         }
 
+        @Test
+        @DisplayName("Testing to create animal with invalid (gata) specie.")
+        void testAnimalInvalidSpecie2() throws Exception{
+            String json = """
+                {   "animalName": "Kiara",
+                    "animalAge": "ADULT",
+                    "animalSex": "FEMALE",
+                    "animalSpecie": "gata",
+                    "animalDescription": "A cute cat.",
+                    "animalIsCastrated": true,
+                    "animalIsVaccinated": true } """;
+
+            driver.perform(post(URI_ANIMALS + "/create")
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
+        }
+        
         @Test
         @DisplayName("Testing to create animal with null sex.")
         void testAnimalInvalidSex() throws Exception{
@@ -346,11 +385,11 @@ public class AnimalsTest {
 
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
         }
 
         @Test
@@ -367,11 +406,11 @@ public class AnimalsTest {
 
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isBadRequest())
+            .andReturn();
         }
 
         @Test
@@ -388,11 +427,11 @@ public class AnimalsTest {
             "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
         }
 
         @Test
@@ -409,11 +448,11 @@ public class AnimalsTest {
             "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
         }
 
         @Test
@@ -428,11 +467,11 @@ public class AnimalsTest {
             "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
         }
 
         @Test
@@ -447,11 +486,11 @@ public class AnimalsTest {
             "animalIsCastrated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
         }
 
         @Test
@@ -466,16 +505,21 @@ public class AnimalsTest {
             "animalIsVaccinated": true } """;
 
             driver.perform(post(URI_ANIMALS + "/create")
-                            .header("Authorization", "Bearer " + AUTH_TOKEN)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(json))
-                    .andExpect(status().isCreated())
-                    .andReturn();
+            .header("Authorization", "Bearer " + AUTH_TOKEN)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+            .andExpect(status().isCreated())
+            .andReturn();
         }
+    }
+
+    @Nested
+    @DisplayName("Testing to recover animals by ID.")
+    class RecoverAnimalByID {
 
         @Test
         @DisplayName("When we look for an animal saved by ID")
-        void whenWeLookForAnAnimalSavedById() throws Exception {
+        void testWhenWeLookForAnAnimalSavedById() throws Exception {
             // Arrange
 
             // Act
@@ -505,7 +549,7 @@ public class AnimalsTest {
 
         @Test
         @DisplayName("When we look for an animal invalid")
-        void whenWeLookForAnAnimalInvalid() throws Exception {
+        void testWhenWeLookForAnAnimalInvalid() throws Exception {
             // Arrange
 
             // Act
@@ -526,7 +570,7 @@ public class AnimalsTest {
 
         @Test
         @DisplayName("When we change a valid animal")
-        void whenWeChangeAValidAnimal() throws Exception {
+        void testWhenWeChangeAValidAnimal() throws Exception {
             // Arrange
             String animalId = animal.getId();
 
@@ -558,7 +602,7 @@ public class AnimalsTest {
 
         @Test
         @DisplayName("When we change a invalid animal")
-        void whenWeChangeAInvalidAnimal() throws Exception {
+        void testWhenWeChangeAInvalidAnimal() throws Exception {
             // Arrange
 
             // Act
