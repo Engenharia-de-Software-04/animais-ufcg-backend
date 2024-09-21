@@ -37,7 +37,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/auth/login", "auth/register").permitAll()
             .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
             .requestMatchers(HttpMethod.GET, "/adoption_report/get/*").permitAll()
-            .requestMatchers(HttpMethod.GET, "/animal/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/animal/getAvailable", "/animal/{id}").permitAll()
             .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

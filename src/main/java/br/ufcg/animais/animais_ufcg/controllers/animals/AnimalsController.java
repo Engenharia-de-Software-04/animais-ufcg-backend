@@ -29,7 +29,7 @@ public class AnimalsController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAnimal(@PathVariable String id){
             animalService.deleteAnimal(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(""); // Retorna 204 No Content quando deletado
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
 
     }
 
