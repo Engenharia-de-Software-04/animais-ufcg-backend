@@ -1,11 +1,11 @@
-package br.ufcg.animais.animais_ufcg.dto.animals;
+package br.ufcg.animais.animais_ufcg.dtos.animals;
+
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import br.ufcg.animais.animais_ufcg.models.enumerations.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
-import java.util.*;
 
 @Data
 @Builder
@@ -33,17 +33,21 @@ public class AnimalPostPutRequestDTO {
     private AnimalAge animalAge;
 
     @JsonProperty("animalSpecie")
-    @NotBlank(message = "Animal's specie is required!")
-    private String animalSpecie;
+    @NotNull(message = "Animal's specie is required!")
+    private AnimalSpecie animalSpecie;
 
     @JsonProperty("animalDescription")
     private String animalDescription;
 
     @JsonProperty("animalIsCastrated")
-    private Boolean animalIsCastrated;
+    @Field("animalIsCastrated")
+    @Builder.Default
+    private Boolean animalIsCastrated = false;
 
     @JsonProperty("animalIsVaccinated")
-    private Boolean animalIsVaccinated;
+    @Field("animalIsVaccinated")
+    @Builder.Default
+    private Boolean animalIsVaccinated = false;
 
     @JsonProperty("photo")
     private byte[] photo;

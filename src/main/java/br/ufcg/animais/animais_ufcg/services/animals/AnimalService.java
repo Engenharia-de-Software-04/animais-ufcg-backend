@@ -1,7 +1,7 @@
 package br.ufcg.animais.animais_ufcg.services.animals;
 
-import br.ufcg.animais.animais_ufcg.dto.animals.AnimalPostPutRequestDTO;
-import br.ufcg.animais.animais_ufcg.dto.animals.AnimalResponseDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
 
 public interface AnimalService {
 

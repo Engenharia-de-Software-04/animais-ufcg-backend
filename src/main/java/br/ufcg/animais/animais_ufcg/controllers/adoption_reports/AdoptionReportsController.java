@@ -1,6 +1,6 @@
 package br.ufcg.animais.animais_ufcg.controllers.adoption_reports;
 
-import br.ufcg.animais.animais_ufcg.dto.animals.AdoptionReportsPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +9,12 @@ import jakarta.validation.Valid;
 import br.ufcg.animais.animais_ufcg.services.adoption_reports.*;
 
 @RestController
-@RequestMapping("/adoption_reports")
+@RequestMapping("/adoption_report")
 public class AdoptionReportsController {
-    
+
     @Autowired
     AdoptionReportService adoptionReportService;
-    
+
     @PostMapping("/create")
     public ResponseEntity<?> creatingAdoptionReport(@RequestBody @Valid AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO) {
         return ResponseEntity
@@ -28,5 +28,4 @@ public class AdoptionReportsController {
                 .status(HttpStatus.OK)
                 .body(adoptionReportService.gettingAllReports());
     }
-
 }

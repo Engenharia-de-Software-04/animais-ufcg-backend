@@ -1,13 +1,14 @@
 package br.ufcg.animais.animais_ufcg;
 
-import br.ufcg.animais.animais_ufcg.dto.animals.AdoptionReportsPostPutRequestDTO;
-import br.ufcg.animais.animais_ufcg.dto.animals.AdoptionReportsResponseDTO;
-import br.ufcg.animais.animais_ufcg.dto.animals.AnimalPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsResponseDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import br.ufcg.animais.animais_ufcg.exceptions.CustomErrorType;
 import br.ufcg.animais.animais_ufcg.models.adoption_reports.AdoptionReport;
 import br.ufcg.animais.animais_ufcg.models.animals.Animal;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalAge;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalSex;
+import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalSpecie;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
 import br.ufcg.animais.animais_ufcg.repositories.adoption_reports.AdoptionReportsRepository;
 import br.ufcg.animais.animais_ufcg.repositories.animals.AnimalsRepository;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DisplayName("Animal Controller Tests")
 public class GetAllAdoptionReportsTests {
-    final String URI_REPORTS = "/adoption_reports";
+    final String URI_REPORTS = "/adoption_report";
 
     @Autowired
     MockMvc driver;
@@ -91,7 +92,7 @@ public class GetAllAdoptionReportsTests {
                     .animalSex(AnimalSex.FEMALE)
                     .animalName("Nala")
                     .animalAge(AnimalAge.YOUNG)
-                    .animalSpecie("DOG")
+                    .animalSpecie(AnimalSpecie.DOG)
                     .animalDescription("teste")
                     .animalIsCastrated(false)
                     .animalIsVaccinated(false)
@@ -151,7 +152,7 @@ public class GetAllAdoptionReportsTests {
                     .animalSex(AnimalSex.FEMALE)
                     .animalName("Nala")
                     .animalAge(AnimalAge.YOUNG)
-                    .animalSpecie("DOG")
+                    .animalSpecie(AnimalSpecie.DOG)
                     .animalDescription("teste")
                     .animalIsCastrated(false)
                     .animalIsVaccinated(false)
@@ -176,7 +177,7 @@ public class GetAllAdoptionReportsTests {
                     .animalSex(AnimalSex.MALE)
                     .animalName("Teddy")
                     .animalAge(AnimalAge.SENIOR)
-                    .animalSpecie("CAT")
+                    .animalSpecie(AnimalSpecie.CAT)
                     .animalDescription("teste")
                     .animalIsCastrated(false)
                     .animalIsVaccinated(false)

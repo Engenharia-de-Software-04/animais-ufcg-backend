@@ -2,19 +2,18 @@ package br.ufcg.animais.animais_ufcg.models.adoption_reports;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.ufcg.animais.animais_ufcg.models.animals.Animal;
-
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.*;
 import org.springframework.data.annotation.Id;
 import lombok.*;
 
 @Getter
+@Setter
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "adoptionReport")
+@Document(collection = "adoption_report")
 public class AdoptionReport {
 
     @JsonProperty("id")

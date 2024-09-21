@@ -1,9 +1,6 @@
-package br.ufcg.animais.animais_ufcg.dto.animals;
-
+package br.ufcg.animais.animais_ufcg.dtos.adoption_reports;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.ufcg.animais.animais_ufcg.models.adoption_reports.AdoptionReport;
-import br.ufcg.animais.animais_ufcg.models.animals.Animal;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -11,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdoptionReportsResponseDTO {
+public class AdoptionReportsPostPutRequestDTO {
 
     @JsonProperty("id")
     private String id;
@@ -30,12 +27,4 @@ public class AdoptionReportsResponseDTO {
 
     @JsonProperty("photo")
     private byte[] photo;
-
-    public AdoptionReportsResponseDTO(AdoptionReport adoptionReport) {
-        this.id = adoptionReport.getId();
-        this.animalID = adoptionReport.getAnimalID();
-        this.animalOwnerName = adoptionReport.getAnimalOwnerName();
-        this.adoptionReport = adoptionReport.getAdoptionReport();
-        this.photo = adoptionReport.getPhoto();
-    }
 }

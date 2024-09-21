@@ -1,7 +1,7 @@
 package br.ufcg.animais.animais_ufcg.controllers.animals;
 
 
-import br.ufcg.animais.animais_ufcg.dto.animals.AnimalPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
