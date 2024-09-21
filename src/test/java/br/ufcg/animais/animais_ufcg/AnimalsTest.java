@@ -113,6 +113,7 @@ public class AnimalsTest {
     void tearDown() {
         Optional<User> user = userRepository.findByEmail("admin@ccc.ufcg.edu.br");
         userRepository.delete(user);
+        animalsRepository.deleteAll();
     }
 
     @Nested
