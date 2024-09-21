@@ -6,6 +6,7 @@ import br.ufcg.animais.animais_ufcg.exceptions.CustomErrorType;
 import br.ufcg.animais.animais_ufcg.models.animals.Animal;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalAge;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalSex;
+import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalSpecie;
 import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
 import br.ufcg.animais.animais_ufcg.repositories.animals.AnimalsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -67,7 +68,7 @@ public class GetAvailableAnimalsTests {
                 .animalSex(AnimalSex.MALE)
                 .animalName("TesteAvailable3")
                 .animalAge(AnimalAge.ADULT)
-                .animalSpecie("CAT")
+                .animalSpecie(AnimalSpecie.CAT)
                 .animalDescription("teste")
                 .animalIsCastrated(false)
                 .animalIsVaccinated(false)
@@ -104,7 +105,7 @@ public class GetAvailableAnimalsTests {
                     .animalSex(AnimalSex.FEMALE)
                     .animalName("TesteAvailable")
                     .animalAge(AnimalAge.YOUNG)
-                    .animalSpecie("DOG")
+                    .animalSpecie(AnimalSpecie.DOG)
                     .animalDescription("teste")
                     .animalIsCastrated(false)
                     .animalIsVaccinated(false)
@@ -150,7 +151,7 @@ public class GetAvailableAnimalsTests {
                     .animalSex(AnimalSex.FEMALE)
                     .animalName("TesteAvailable")
                     .animalAge(AnimalAge.YOUNG)
-                    .animalSpecie("DOG")
+                    .animalSpecie(AnimalSpecie.DOG)
                     .animalDescription("teste")
                     .animalIsCastrated(false)
                     .animalIsVaccinated(false)
@@ -163,7 +164,7 @@ public class GetAvailableAnimalsTests {
                     .animalSex(AnimalSex.MALE)
                     .animalName("TesteAvailable2")
                     .animalAge(AnimalAge.SENIOR)
-                    .animalSpecie("CAT")
+                    .animalSpecie(AnimalSpecie.CAT)
                     .animalDescription("teste")
                     .animalIsCastrated(false)
                     .animalIsVaccinated(false)
