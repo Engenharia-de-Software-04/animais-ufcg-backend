@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AnimalsRepository extends MongoRepository<Animal, String> {
     List<Animal> findByStatusAnimal(AnimalStatus status);
+
 }

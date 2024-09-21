@@ -577,5 +577,57 @@ public class AnimalsTest {
                     () -> assertEquals("Animal not found!", resultado.getMessage())
             );
         }
+
+        @Nested
+        @DisplayName("Testing to delete animals.")
+        class DeleteAnimalTests {
+            @Test
+            @DisplayName("When we delete an existing animal")
+            void whenWeDeleteAnExistingAnimal() throws Exception {
+
+                String validAnimalId = animal.getId(); // ID VÁLIDO
+
+                // Act & Assert
+                driver.perform(delete(URI_ANIMALS + "/" + validAnimalId)
+                                .header("Authorization", "Bearer " + AUTH_TOKEN)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNoContent()) // Espera-se um código 204 No Content
+                        .andDo(print());
+            }
+
+            @Test
+            @DisplayName("When we try to delete an animal with an invalid ID")
+            void whenWeTryToDeleteAnAnimalWithNotExistID() throws Exception {
+
+                String invalidAnimalId = "789789798"; // ID inexistente ou inválido
+
+                // Act
+                String responseJsonString = driver.perform(delete(URI_ANIMALS + "/" + invalidAnimalId)
+                                .header("Authorization", "Bearer " + AUTH_TOKEN)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNotFound()) // Espera-se um 404 Not Found
+                        .andDo(print())
+                        .andReturn().getResponse().getContentAsString();
+
+            }
+            @Test
+            @DisplayName("When we try to delete an animal with an invalid ID")
+            void whenWeTryToDeleteAnAnimalWithInvalidID() throws Exception {
+
+                String invalidAnimalId = "kataaa"; // ID inválido
+
+                // Act
+                String responseJsonString = driver.perform(delete(URI_ANIMALS + "/" + invalidAnimalId)
+                                .header("Authorization", "Bearer " + AUTH_TOKEN)
+                                .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNotFound()) // Espera-se um 404 Not Found
+                        .andDo(print())
+                        .andReturn().getResponse().getContentAsString();
+
+            }
+
+
+        }
+
     }
 }

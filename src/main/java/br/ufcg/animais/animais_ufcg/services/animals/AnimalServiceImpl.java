@@ -12,6 +12,7 @@ import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,8 +36,10 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public void deleteAnimal(String id){
-        Animal animal = animalsRepository.findById(id).orElseThrow(AnimalNotFound::new);
-        animalsRepository.delete(animal);
+        if (animalsRepository.findById(id).isEmpty()){
+            throw new AnimalNotFoundException();
+        }
+        animalsRepository.deleteById(id);
     }
 
     @Override
