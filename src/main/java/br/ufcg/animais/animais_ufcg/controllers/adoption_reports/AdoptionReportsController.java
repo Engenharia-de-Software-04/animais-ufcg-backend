@@ -35,4 +35,10 @@ public class AdoptionReportsController {
                 .status(HttpStatus.OK)
                 .body(adoptionReportService.gettingAllReports());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAdoptionReport(@PathVariable String id){
+        adoptionReportService.deleteAdoptionReport(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+    }
 }

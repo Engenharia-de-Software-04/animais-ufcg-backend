@@ -59,4 +59,13 @@ public class AdoptionReportServiceImpl implements AdoptionReportService {
                 .map(report -> modelMapper.map(report, AdoptionReportsResponseDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAdoptionReport(String id) {
+        if (adoptionReportsRepository.findById(id).isEmpty()){
+            throw new ReportNotFoundException();
+        }
+        adoptionReportsRepository.deleteById(id);
+    }
+
 }

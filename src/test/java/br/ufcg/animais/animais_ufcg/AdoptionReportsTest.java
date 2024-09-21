@@ -2,9 +2,12 @@ package br.ufcg.animais.animais_ufcg;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.*;
 
+import br.ufcg.animais.animais_ufcg.dtos.adoption_reports.AdoptionReportsPostPutRequestDTO;
+import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -38,6 +41,14 @@ public class AdoptionReportsTest {
 
     @Autowired
     MockMvc driver;
+
+    Animal animal;
+
+    AnimalPostPutRequestDTO animalPostPutRequestDTO1;
+
+    AdoptionReportsPostPutRequestDTO adoptionReportsPostPutRequestDTO1;
+
+    AdoptionReport report;
 
     @Autowired
     AnimalsRepository animalsRepository;
@@ -79,6 +90,48 @@ public class AdoptionReportsTest {
         String token = loginResponseDTO.token();
 
         this.AUTH_TOKEN = token;
+
+
+        animal = animalsRepository.save(Animal.builder()
+                .statusAnimal(AnimalStatus.AVAILABLE)
+                .animalSex(AnimalSex.FEMALE)
+                .animalName("Nala")
+                .animalAge(AnimalAge.YOUNG)
+                .animalSpecie(AnimalSpecie.DOG)
+                .animalDescription("teste")
+                .animalIsCastrated(false)
+                .animalIsVaccinated(false)
+                .photo("ZXhhbXBsZQ==".getBytes())
+                .build()
+        );
+
+        animalPostPutRequestDTO1 = AnimalPostPutRequestDTO.builder()
+                .statusAnimal(animal.getStatusAnimal())
+                .animalSex(animal.getAnimalSex())
+                .animalName(animal.getAnimalName())
+                .animalAge(animal.getAnimalAge())
+                .animalSpecie(animal.getAnimalSpecie())
+                .animalDescription(animal.getAnimalDescription())
+                .animalIsCastrated(animal.getAnimalIsCastrated())
+                .animalIsVaccinated(animal.getAnimalIsVaccinated())
+                .photo(animal.getPhoto())
+                .build();
+
+
+        report = adoptionReportsRepository.save(AdoptionReport.builder()
+                .animalID(animal.getId())
+                .animalOwnerName("Rohit")
+                .adoptionReport("She's pretty")
+                .photo("ZXhhbXBsZQ==".getBytes())
+                .build()
+        );
+
+        adoptionReportsPostPutRequestDTO1 = AdoptionReportsPostPutRequestDTO.builder()
+                .animalID(report.getAnimalID())
+                .animalOwnerName(report.getAnimalOwnerName())
+                .adoptionReport(report.getAdoptionReport())
+                .photo(report.getPhoto())
+                .build();
     }
 
     @AfterEach
@@ -363,6 +416,45 @@ public class AdoptionReportsTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+        }
+    }
+    @Nested
+    @DisplayName("Testing to delete an adoption report")
+    class DeletingReport{
+        @Test
+        @DisplayName("When we delete an existing adoption report")
+        void whenWeDeleteAnExistingAdoptionReport() throws Exception {
+            String validAdoptionReportId = report.getId(); // ID VÁLIDO
+            // Act & Assert
+            driver.perform(delete(URI_ADOPTION_REPORT+ "/" + validAdoptionReportId)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNoContent())  // Espera-se um código 204 No Content
+                    .andDo(print());
+        }
+
+        @Test
+        @DisplayName("When we try to delete an adoption report with a non-existing ID")
+        void whenWeTryToDeleteAnAdoptionReportWithNonExistentID() throws Exception {
+            String invalidAdoptionReportId = "789789798bsaksbahjxdbsakdbhsak"; // ID inexistente
+
+            String responseJsonString = driver.perform(delete(URI_ADOPTION_REPORT + "/" + invalidAdoptionReportId)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())  // 404 Not Found
+                    .andDo(print()).toString();
+        }
+        @Test
+        @DisplayName("When we try to delete an adoption report with an invalid ID format")
+        void whenWeTryToDeleteAnAdoptionReportWithInvalidIDFormat() throws Exception {
+            String invalidAdoptionReportId = "invalidId123"; // ID inválido
+            // Act
+            String responseJsonString = driver.perform(delete(URI_ADOPTION_REPORT + "/" + invalidAdoptionReportId)
+                            .header("Authorization", "Bearer " + AUTH_TOKEN)
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())  // 400 Bad Request
+                    .andDo(print())
+                    .andReturn().getResponse().getContentAsString();
         }
     }
 }
