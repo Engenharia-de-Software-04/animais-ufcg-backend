@@ -59,4 +59,10 @@ public class AdoptionReportServiceImpl implements AdoptionReportService {
                 .map(report -> modelMapper.map(report, AdoptionReportsResponseDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAdoptionReport(String id) {
+        AdoptionReport adoptionReport = adoptionReportsRepository.findById(id).orElseThrow(AdoptionReportNotFound::new);
+        adoptionReportsRepository.deleteById(id);
+    }
 }
