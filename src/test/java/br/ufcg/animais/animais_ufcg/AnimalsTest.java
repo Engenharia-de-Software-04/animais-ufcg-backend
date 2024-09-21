@@ -5,8 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.util.*;
 
 import br.ufcg.animais.animais_ufcg.exceptions.CustomErrorType;
 import br.ufcg.animais.animais_ufcg.models.animals.Animal;
