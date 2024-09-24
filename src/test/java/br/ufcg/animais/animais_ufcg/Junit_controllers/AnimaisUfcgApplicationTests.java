@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg;
+package br.ufcg.animais.animais_ufcg.Junit_controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

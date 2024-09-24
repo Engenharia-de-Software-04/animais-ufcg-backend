@@ -1,4 +1,4 @@
-package br.ufcg.animais.animais_ufcg.controllers;
+package br.ufcg.animais.animais_ufcg.controllers.user;
 
 import java.util.Optional;
 
@@ -30,7 +30,6 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginRequestDTO body) {
 		User user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
-		System.out.println(this.userRepository.findAll());
 		if (passwordEncoder.matches(body.password(), user.getPassword())) {
 			String token = this.tokenService.generateToken(user);
 			return ResponseEntity.ok(new LoginResponseDTO(user.getName(), token));
@@ -40,7 +39,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
+	public ResponseEntity<?> register(@RequestBody RegisterRequestDTO body) {
 		Optional<User> user = this.userRepository.findByEmail(body.email());
 		if (user.isEmpty()) {
 			User newUser = new User();
@@ -49,10 +48,9 @@ public class AuthController {
 			newUser.setName(body.name());
 			this.userRepository.save(newUser);
 			String token = this.tokenService.generateToken(newUser);
-			System.out.println(newUser.getName());
 			return ResponseEntity.ok(new LoginResponseDTO(newUser.getName(), token)); 			
 		}
 		
-		return ResponseEntity.badRequest().build();
+		return ResponseEntity.status(400).body("Email already exists");
 	}
 }
