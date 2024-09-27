@@ -7,12 +7,14 @@ import br.ufcg.animais.animais_ufcg.models.enumerations.AnimalStatus;
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalPostPutRequestDTO;
 import br.ufcg.animais.animais_ufcg.dtos.animals.AnimalResponseDTO;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.ufcg.animais.animais_ufcg.dtos.animals.*;
 import br.ufcg.animais.animais_ufcg.models.animals.*;
 import br.ufcg.animais.animais_ufcg.repositories.animals.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,9 +66,25 @@ public class AnimalServiceImpl implements AnimalService {
         if(animals.isEmpty()){
             throw new AnimalAvailableNotFoundException();
         }
-        return animals.stream()
-                .map(animal->modelMapper.map(animal, AnimalResponseDTO.class))
-                .collect(Collectors.toList());
+
+        List<AnimalResponseDTO> animalList = new ArrayList<>();
+        for (Animal animal : animals) {
+            AnimalResponseDTO dto = new AnimalResponseDTO();
+            dto.setId(animal.getId());
+            dto.setStatusAnimal(animal.getStatusAnimal());
+            dto.setAnimalSex(animal.getAnimalSex());
+            dto.setAnimalName(animal.getAnimalName());
+            dto.setAnimalAge(animal.getAnimalAge());
+            dto.setAnimalSpecie(animal.getAnimalSpecie());
+            dto.setAnimalDescription(animal.getAnimalDescription());
+            dto.setAnimalIsCastrated(animal.getAnimalIsCastrated());
+            dto.setAnimalIsVaccinated(animal.getAnimalIsVaccinated());
+            dto.setPhoto(animal.getPhoto());
+
+            animalList.add(dto);
+        }
+
+        return animalList;
     }
     @Override
     public List<AnimalResponseDTO> getAllAnimals() {
