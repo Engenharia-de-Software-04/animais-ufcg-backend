@@ -86,14 +86,31 @@ public class AnimalServiceImpl implements AnimalService {
 
         return animalList;
     }
+
     @Override
     public List<AnimalResponseDTO> getAllAnimals() {
         List<Animal> animals = animalsRepository.findAll();
         if(animals.isEmpty()){
             throw new AnimalNotFoundException();
         }
-        return animals.stream()
-                .map(animal -> modelMapper.map(animal, AnimalResponseDTO.class))
-                .collect(Collectors.toList());
+
+        List<AnimalResponseDTO> animalList = new ArrayList<>();
+        for (Animal animal : animals) {
+            AnimalResponseDTO dto = new AnimalResponseDTO();
+            dto.setId(animal.getId());
+            dto.setStatusAnimal(animal.getStatusAnimal());
+            dto.setAnimalSex(animal.getAnimalSex());
+            dto.setAnimalName(animal.getAnimalName());
+            dto.setAnimalAge(animal.getAnimalAge());
+            dto.setAnimalSpecie(animal.getAnimalSpecie());
+            dto.setAnimalDescription(animal.getAnimalDescription());
+            dto.setAnimalIsCastrated(animal.getAnimalIsCastrated());
+            dto.setAnimalIsVaccinated(animal.getAnimalIsVaccinated());
+            dto.setPhoto(animal.getPhoto());
+
+            animalList.add(dto);
+        }
+
+        return animalList;
     }
 }
